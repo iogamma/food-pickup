@@ -3,14 +3,18 @@ const itemsRoutes  = express.Router();
 
 module.exports = function(DataHelpers) {
 
- itemsRoutes.get("/restaurants", function(req, res) {
+ itemsRoutes.get("/", function(req, res) {
 
-        res.render("index.html");
+        res.sendfile('./public/index.html');
 
 
   });
 
+itemsRoutes.get("/hello", (req, res) => {
+  DataHelpers.getMenueItemsBasic(function(db){console.log(db)});
+  res.send("<html><body>Hello <b>World</b></body></html>\n");
 
+});
 
 
 
@@ -23,4 +27,4 @@ module.exports = function(DataHelpers) {
 
     return itemsRoutes;
 
-}
+};
