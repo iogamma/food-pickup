@@ -16,5 +16,8 @@
     "url": "https://github.com/Jshen123/food_pick_up/issues"
   },
   "homepage": "https://github.com/Jshen123/food_pick_up#readme",
-  "dependencies": {}
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "express": "^4.15.0"
+  }
 }
