@@ -1,20 +1,27 @@
 {
-  "name": "food_pick_up",
+  "name": "food_pickup",
   "version": "1.0.0",
-  "description": "",
+  "description": "## As a user,",
   "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "bootstrap": "^3.3.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jshen123/food_pick_up.git"
+    "url": "git+https://github.com/iogamma/food_pickup.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Jshen123/food_pick_up/issues"
+    "url": "https://github.com/iogamma/food_pickup/issues"
   },
-  "homepage": "https://github.com/Jshen123/food_pick_up#readme",
-  "dependencies": {}
+  "homepage": "https://github.com/iogamma/food_pickup#readme",
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "express": "^4.15.0"
+  }
 }
