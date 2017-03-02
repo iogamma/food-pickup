@@ -5,7 +5,9 @@ module.exports = function(DataHelpers) {
 
  itemsRoutes.get("/", function(req, res) {
 
-        res.sendfile('./public/index.html');
+
+        res.render("index.ejs");
+
 
 
   });
