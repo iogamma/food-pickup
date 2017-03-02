@@ -22,6 +22,9 @@
     <!-- nav css -->
     <link rel="stylesheet" type="text/css" href="styles/nav.css">
 
+    <!-- ownerpage css -->
+    <link rel="stylesheet" type="text/css" href="styles/ownerpage.css">
+
   </head>
 <body>
   <!-- Top nav bar (fixed) -->
@@ -30,7 +33,6 @@
       <div class="navbar-header">
         <img class="logo" src="http://images.clipartpanda.com/lighthouse-clipart-lighthouse7.png">
       </div>
-
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#">Login customer<span class="sr-only">(current)</span></a></li>
@@ -39,13 +41,62 @@
       </div>
     </div>
   </nav>
-  <h2>
-    Current Orders:
-  </h2>
-  <ul>
-    <li>
-    Order ID, customer name,
-    </li>
-  </ul>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="custOrdersHeader">Current Orders:</div>
+      </div>
+    </div>
+      <div class="custOrders">
+        <div class="row">
+          <div class="col-md-4">Order ID</div>
+          <div class="col-md-4">customer name</div>
+          <div class="col-md-4">phone number</div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-6">food</div>
+          <div class="col-md-2">quantity</div>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="text-center col-md-4">Please inform customer of order pick up time</div>
+          <div class="text-center col-md-2">
+            <input type="text" class="form-control" id="deliveryTime" placeholder="minutes">
+          </div>
+          <div class="text-center col-md-2">
+          <a href="#" class="btn btn-primary btn-lg">submit</a>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="custOrdersHeader">In Queue:</div>
+      </div>
+    </div>
+      <div class="custQueue">
+        <div class="row">
+          <div class="col-md-4">Order ID</div>
+          <div class="col-md-4">customer name</div>
+          <div class="col-md-4">phone number</div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-6">food</div>
+          <div class="col-md-2">quantity</div>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="text-center col-md-4">Pending for pickup....</div>
+          <div class="text-center col-md-4">
+          <a href="#" class="btn btn-primary btn-lg">Remove from Queue</a>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+  </div>
 </body>
 </html>
