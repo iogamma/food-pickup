@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex": "./node_modules/.bin/knex"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Jshen123/food_pick_up/issues"
   },
-  "homepage": "https://github.com/Jshen123/food_pick_up#readme"
+  "homepage": "https://github.com/Jshen123/food_pick_up#readme",
+  "dependencies": {
+    "knex": "^0.12.7"
+  }
 }
