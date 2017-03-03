@@ -1,61 +1,95 @@
+
+
+
 $(document).ready(function(){
+
+  function renderOrders(data) {
+    // for(id of orders){
+    //   $('.custOrders').append(createOrderElement(id));
+    // }
+      var data = {
+        orderId: 1,
+        users: {id:2, name:"Abc", phone_number: 6041231234},
+        items: [{id: 3, name: "chips", quantity: 5}]
+      }
+      $('.ordersList').append(createOrderElement(data));
+      $('.queueList').append(createQueueElement(data));
+  }
+
   //element for placed order to order list
   function createOrderElement(invoice){
 
-    var $order = $('.containCustOrders').addClass('.custOrders')
-    var orderInfo = '<div class="row orderInfo">'
-    var $orderId = $(".col-md-4 orderId").text(invoice.orders.id);
-    var $custName = $(".col-md-4 custName").text(invoice.users.username);
-    var $phoneNumber = $(".col-md-4 phoneNumber").text(invoice.users.phone_number);
-    var foodItem = '<div class="row foodItem">'
-    var space2col = '<div class =".col-md-2"></div>';
-    var $itemName = $(".col-md-6 itemName").text(invoice.items.name);
-    var $quantity = $(".col-md2 quantity").text(invoice.items.id[?]);
-    var responseToOrder = '<div class="row responseToOrder">'
-    var informMsg = '<div class="text-center col-md-4">Please inform customer of order pick up time</div>'
-    var timeInput = '<input type="text" class="form-control" id="deliveryTime" placeholder="minutes">'
-    var submitTime = '<a href="#" class="btn btn-primary btn-lg">submit</a>'
+    var $order = $("<div>", {"class": "row custOrders"});
+    var $column = $("<div>", {"class": "col-md-12"});
 
-    $order.append(orderInfo, foodItem, responseToOrder);
-    orderInfo.append($orderId, $custName, $phoneNumber);
-    foodItem.append(space2col, $itemName, $quantity, space2col);
-    responseToOrder.append(space2col, informMsg, timeInput, submitTime, space2col);
+    var $orderInfo = $("<div>", {"class": "row orderInfo"});
+    var $orderId = $("<div>", {"class": "col-md-3 orderId"}).text("Order# " + invoice.orderId);
+    var $custName = $("<div>", {"class": "col-md-6 custName"}).text(invoice.users[name]);
+    var $phoneNumber = $("<div>", {"class": "col-md-3 phoneNumber"})/*.text(invoice.users[phone_number])*/;
 
-    return $order;
+    var $foodItem = $("<div>", {"class": "row foodItem"});
+    var $itemName = $("<div>", {"class": "col-md-10 itemName"}).text(invoice.items[name]);
+    var $quantity = $("<div>", {"class": "col-md-2 quantity"})/*.text(invoice.items[quantity])*/;
+
+    var $responseToOrder = $("<div>", {"class": "row responseToOrder"});
+    var $informMsg = $("<div>", {"class": "text-center col-md-6"}).text("Please inform customer of order pick up time");
+    var $timeInput = $("<input>", {
+      "type": "text",
+      "class": "form-control",
+      "id": "deliveryTime",
+      "placeholder": "minutes"
+    });
+    var $submitTime = $("<a>", {
+      "href": "#",
+      "class": "btn btn-primary btn-lg"
+    }).text("Submit");
+    var $inputCol = $("<div>", {"class": "col-md-2"}).append($timeInput);
+    var $submitCol = $("<div>", {"class": "col-md-4"}).append($submitTime);
+
+
+    $order.append($column);
+    $column.append($orderInfo, $foodItem, $responseToOrder);
+    $orderInfo.append($orderId, $custName, $phoneNumber);
+    $foodItem.append($itemName, $quantity);
+    $responseToOrder.append($informMsg, $inputCol, $submitCol);
+
+    //whether or not to append
+    if (invoice.orderId = 0){
+      return;
+    } else {
+      return $order;
+    }
   }
 
   //element for order to queue list
   function createQueueElement(invoice){
 
-    var $order = $('.containPendingOrders').addClass('.custQueue')
-    var orderInfo = '<div class="row orderInfo">'
-    var $orderId = $(".col-md-4 orderId").text(invoice.orders.id);
-    var $custName = $(".col-md-4 custName").text(invoice.users.username);
-    var $phoneNumber = $(".col-md-4 phoneNumber").text(invoice.users.phone_number);
-    var foodItem = '<div class="row foodItem">'
-    var space2col = '<div class =".col-md-2"></div>';
-    var $itemName = $(".col-md-6 itemName").text(invoice.items.name);
-    var $quantity = $(".col-md2 quantity").text(invoice.items.id[?]);
-    var clearQueue = '<div class="row clearQueue">';
-    var statusOfOrder = '<div class="text-center col-md-4">Pending for pickup....</div>';
-    var completeOrder = '<div class="text-center col-md-4"><a href="#" class="btn btn-primary btn-lg">Complete Order</a></div>';
+    var $order = $("<div>", {"class": "row custQueue"});
+    var $column = $("<div>", {"class": "col-md-12"});
 
+    var $orderInfo = $("<div>", {"class": "row orderInfo"});
+    var $orderId = $("<div>", {"class": "col-md-3 orderId"}).text("Order# " + invoice.orderId);
+    var $custName = $("<div>", {"class": "col-md-6 custName"}).text(invoice.users[name]);
+    var $phoneNumber = $("<div>", {"class": "col-md-3 phoneNumber"})/*.text(invoice.users[phone_number])*/;
 
-    $order.append(orderInfo, foodItem, clearQueue);
-    orderInfo.append($orderId, $custName, $phoneNumber);
-    foodItem.append(space2col, $itemName, $quantity, space2col);
-    clearQueue.append(space2col, statusOfOrder, completeOrder, space2col);
+    var $foodItem = $("<div>", {"class": "row foodItem"});
+    var $itemName = $("<div>", {"class": "col-md-10 itemName"}).text(invoice.items[name]);
+    var $quantity = $("<div>", {"class": "col-md-2 quantity"})/*.text(invoice.items[quantity])*/;
+
+    var $clearQueue = $("<div>", {"class": "row clearQueue"});
+    var $statusOfOrder = $("<div>", {"class": "text-center col-md-6"}).text("Pending for pick up.....");
+    var $completeOrder = $("<a>", {
+      "href": "#",
+      "class": "btn btn-primary btn-lg"
+    }).text("Complete Order");
+
+    $order.append($column);
+    $column.append($orderInfo, $foodItem, $clearQueue);
+    $orderInfo.append($orderId, $custName, $phoneNumber);
+    $foodItem.append($itemName, $quantity);
+    $clearQueue.append($statusOfOrder, $completeOrder);
 
     return $order;
-  }
-
-  function renderOrders(orders) {
-    var orders = {
-
-    }
-    for(id of orders){
-      $('.custOrders').append(createOrderElement(id));
-    }
   }
 
   // function loadOrders() {
@@ -70,8 +104,9 @@ $(document).ready(function(){
 
   renderOrders();
 
-
-
-
-
 });
+
+
+
+
+

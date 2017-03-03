@@ -19,6 +19,9 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- App JS -->
+    <script type="text/javascript" src="/scripts/app.js"></script>
+
     <!-- nav css -->
     <link rel="stylesheet" type="text/css" href="styles/nav.css">
 
@@ -28,13 +31,40 @@
   </head>
   <body>
     <!-- Top nav bar (fixed) -->
-    <header>
-      <% include partials/_navbar.ejs %>
-    </header>
+  <!-- Top nav bar (fixed) -->
+  <nav class="mynav navbar">
+    <% include partials/_navbar %>
+  </nav>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
+  <div class="main container-fluid">
+    <div class="row">
+      <div class="left col-md-2"></div>
+      <div class="center col-md-8">
+
+        <div class="currentOrders row">
+          <div class="ordersList col-md-12">
+            <div class="header row">
+              <div class="col-md-12 custOrdersHeader">Current Orders</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="queue row">
+          <div class="queueList col-md-12">
+            <div class="header row">
+              <div class="col-md-12 custOrdersHeader">In Queue</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row"></div>
+      </div>
+      <div class="right col-md-2"></div>
+    </div>
+      <!-- <div class="row"> -->
+       <!--  <div class="col-md-12">
           <div class="custOrdersHeader">Current Orders:</div>
         </div>
       </div>
@@ -91,7 +121,7 @@
             <div class="col-md-2"></div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </body>
 </html>
