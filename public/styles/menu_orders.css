@@ -1,0 +1,8 @@
+.order_items {
+  background: lightgrey;
+  height: 10em;
+  position: fixed;
+  top: 12em;
+  width: 10em;
+  z-index: 9999;
+}

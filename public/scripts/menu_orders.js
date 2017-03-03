@@ -38,8 +38,14 @@ $(document).ready(function(){
 
   function renderMenu(menu) {
     var $item = createItem();
-    console.log($item);
+    var $anotherItem = createItem();
+    // for(var i; i < 5; i++) {
+    //   console.log(2);
+    //   $(".center").append($item);
+    // }
     $(".center").append($item);
+    $(".center").append($anotherItem);
+
 
     // for(id of items){
     //   $('.custOrders').append(createItems(id));

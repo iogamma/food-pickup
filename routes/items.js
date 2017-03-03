@@ -35,9 +35,9 @@ res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html
 
 // Ajax to keep checking the status of the cart and display
 itemsRoutes.get("/cart", function(req, res) {
+res.render("menu_orders.ejs");
 
 
-        res.status(200);
 });
 
 // user gets updates on the delivary time
