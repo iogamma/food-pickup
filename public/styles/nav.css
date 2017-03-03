@@ -1,5 +1,5 @@
 
-.logo {
+.mynav .logo {
   height: 150px;
   left: 50%;
   padding: 1em;
@@ -8,7 +8,12 @@
   width: 150px;
 }
 
-.navbar {
+.mynav {
+  background: #ffd7d7;
+  left: 0;
   min-height: 150px;
   overflow: auto;
+  position: fixed;
+  right: 0;
+  z-index: 9999;
 }

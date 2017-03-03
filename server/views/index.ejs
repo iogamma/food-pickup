@@ -19,20 +19,37 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- nav css -->
+    <!-- overriding css -->
     <link rel="stylesheet" type="text/css" href="styles/nav.css">
-
+    <link rel="stylesheet" type="text/css" href="styles/index.css">
   </head>
 <body>
   <!-- Top nav bar (fixed) -->
-  <header>
-    <% include partials/_navbar.ejs %>
-  </header>
-  <div class="jumbotron text-center">
-    <h1>Lighthouse Pickup</h1>
-    <p>Order and get a pickup time from a restaurant!.</p>
-  </div>
-  <div class="container-fluid">
+  <nav class="mynav navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <img class="logo" src="http://images.clipartpanda.com/lighthouse-clipart-lighthouse7.png">
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="localhost:8080/restaurants">Home</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login Customer</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login Owner</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="main container-fluid">
+    <div class="top row">
+      <div class="center col-md-12">
+        <div class="jumbotron text-center">
+          <h1>Lighthouse Pickup</h1>
+          <p>Order and get a pickup time from a restaurant!.</p>
+        </div>
+      </div>
+    </div>
     <div class="restaurant-select row">
       <div class="left col-md-4">
       </div>
@@ -40,6 +57,11 @@
         <button class="center-block">Choose this Restaurant</button>
       </div>
       <div class="right col-md-4">
+      </div>
+    </div>
+    <div class="row">
+      <div class="center col-lg-4">
+        Captain Lee 'Apollo' Adama: I thought we were sparring. Commander William Adama: That's why you don't win. Captain Lee 'Apollo' Adama: [in a deleted scene after Laura Roslin asked him if what she did was a mistake] I believe that it is never a mistake to follow your heart. Ellen Tigh: So, you worried about Wallace Grey? I hear he's ahead in the vote count. Tom Zarek: Whatever the people want is fine by me. Ellen Tigh: Everyone has an agenda. I know I do. Tom Zarek: And what would that be? Ellen Tigh: Same as yours, Tom. Me, myself, and... ooh. I. Tom Zarek: You are... clearly a well-connected, well-informed woman. Ellen Tigh: Wife of the XO, for whatever that's worth. Tom Zarek: Ah. Quite a bit. Now, and in the future. Ellen Tigh: That's what I'm interested in, Tom. It's my place, and my... husband's place in the future. Tom Zarek: Okay. I'm looking for a friend of mine. His name is Valence. [scene immediately cuts to Valence dead in his cell in the brig with his wrists cut] Doctor Gaius Baltar: You'll forgive me, Madam President, if I don't wish to be executed based solely on your... gut feeling. Ellen Tigh: So, you worried about Wallace Grey? I hear he's ahead in the vote count. Tom Zarek: Whatever the people want is fine by me. Ellen Tigh: Everyone has an agenda. I know I do. Tom Zarek: And what would that be? Ellen Tigh: Same as yours, Tom. Me, myself, and... ooh. I. Tom Zarek: You are... clearly a well-connected, well-informed woman. Ellen Tigh: Wife of the XO, for whatever that's worth. Tom Zarek: Ah. Quite a bit. Now, and in the future. Ellen Tigh: That's what I'm interested in, Tom. It's my place, and my... husband's place in the future. Tom Zarek: Okay. I'm looking for a friend of mine. His name is Valence. [scene immediately cuts to Valence dead in his cell in the brig with his wrists cut]
       </div>
     </div>
   </div>
