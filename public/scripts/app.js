@@ -1,17 +1,19 @@
 
+
+
 $(document).ready(function(){
 
   function renderOrders(data) {
     // for(id of orders){
     //   $('.custOrders').append(createOrderElement(id));
     // }
-        var data = {
+      var data = {
         orderId: 1,
-        users: [{id:2, name:"Abc", phone_number: 6041231234}],
-        items: [{id: 3, name: "chips"/*, quantity: 5*/}]
-    }
-    console.log("hello")
-    $('.ordersList').append(createOrderElement(data));
+        users: {id:2, name:"Abc", phone_number: 6041231234},
+        items: [{id: 3, name: "chips", quantity: 5}]
+      }
+      console.log("hello")
+      $('.ordersList').append(createOrderElement(data));
   }
 
   //element for placed order to order list
@@ -21,7 +23,7 @@ $(document).ready(function(){
     var $column = $("<div>", {"class": "col-md-12"});
 
     var $orderInfo = $("<div>", {"class": "row orderInfo"});
-    var $orderId = $("<div>", {"class": "col-md-3 orderId"}).text(invoice.orderId);
+    var $orderId = $("<div>", {"class": "col-md-3 orderId"}).text("Order# " + invoice.orderId);
     var $custName = $("<div>", {"class": "col-md-6 custName"}).text(invoice.users[name]);
     var $phoneNumber = $("<div>", {"class": "col-md-3 phoneNumber"})/*.text(invoice.users[phone_number])*/;
 
