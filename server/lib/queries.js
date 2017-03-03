@@ -26,30 +26,22 @@ module.exports = function queriesAndFunctions(db) {
     knex.select().from('items').where({restaurant_id: restaurantId}).then(done);
   },
 // --------
-//   getMenueItems: (restaurantId, callback)=>  {
 
-//       db.knex.select("items.id","items.description","items.name","items.price").from("items").where({'restaurant_id': restaurantId }).asCallback(function(err, values) {
-//         if(err) {
-//           console.log(err);
-//         } else {
-//           console.log(values);
-//         }
-//              console.log(db.Menu.menueItems)
-//     });
-// },
+// we are returning the id so might need nother spot in the callback function on the
+  createNewToOrder:   (userid, done)=> {
+    knex.insert({user_id:userid }).returning('id').into('order').then(done);
+  },
 
-  //   InsertNewToOrders:   (userid, itemID, QuantityOfItem, callback)=> {
+  updateCart:   (itemId, ItemQuantity, orderId, done)=> {
+   // knex.insert({user_id:userid }).returning('id').into('order').then(done);
+   knex("items_orders").where({
+    item_id:itemId,
+    order_id: orderId
+    }).update({quantity: ItemQuantity}).then(done);
 
-  //     knex('restaurantdb')insert({
-  //     user_id: userid,
-  //     long: data.long,
-  //     user_id: data.user_id
-  //   }).into('orders').then(done);
-  //   },
+  },
 
-  //   createUrl: (data, done) => {
 
-  // },
 
 
 

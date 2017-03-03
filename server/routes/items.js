@@ -82,11 +82,12 @@ itemsRoutes.post("/cart/:items_id", function(req, res) {
         //We check if order Id exist
 
         // if(!req.session.order_id) {
-        //   knex('restaurantdb')
-        //   .insert({
-        //     user_id:req.session.user_id,
-        //     time_of_order:new Date()
-        //   })
+
+       // DataHelpers.createNewToOrder(restaurantId, (menuitems) => {
+
+        //});
+
+
 
         //} else {
         // if exists then we need to create a new order row + retriving the id that is chosen and either send it in a session or send it to
