@@ -16,3 +16,8 @@
   border-radius: 5px;
   padding: 1em;
 }
+
+.main {
+  position: relative;
+  padding-top: 12em;
+}

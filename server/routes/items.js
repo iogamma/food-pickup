@@ -5,7 +5,7 @@ module.exports = function(DataHelpers) {
 
  itemsRoutes.get("/", function(req, res) {
 
-        res.render("index.ejs");
+        res.render("owner.ejs");
   });
 
 itemsRoutes.get("/hello", (req, res) => {
