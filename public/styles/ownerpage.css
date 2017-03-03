@@ -1,0 +1,18 @@
+.custOrders {
+  border-color: #f4a641;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.custOrdersHeader {
+  font-size: 3em;
+
+}
+
+.custQueue {
+  border-color: #13723b;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 1em;
+}

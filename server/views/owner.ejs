@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- Meta Information -->
+    <title>Lighthouse Cafe</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" type="text/css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- nav css -->
+    <link rel="stylesheet" type="text/css" href="styles/nav.css">
+
+    <!-- ownerpage css -->
+    <link rel="stylesheet" type="text/css" href="styles/ownerpage.css">
+
+  </head>
+  <body>
+    <!-- Top nav bar (fixed) -->
+    <header>
+      <% include partials/_navbar.ejs %>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="custOrdersHeader">Current Orders:</div>
+        </div>
+      </div>
+      <div class="containCustOrders">
+        <div class="custOrders">
+          <div class="row orderInfo">
+            <div class="col-md-4 orderId">Order ID</div>
+            <div class="col-md-4 custName">customer name</div>
+            <div class="col-md-4 phoneNumber">phone number</div>
+          </div>
+          <div class="row foodItem">
+            <div class="col-md-2"></div>
+            <div class="col-md-6 itemName">food</div>
+            <div class="col-md-2 quantity">quantity</div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="row responseToOrder">
+            <div class="col-md-2"></div>
+            <div class="text-center col-md-4">Please inform customer of order pick up time</div>
+            <div class="text-center col-md-2">
+              <input type="text" class="form-control" id="deliveryTime" placeholder="minutes">
+            </div>
+            <div class="text-center col-md-2">
+            <a href="#" class="btn btn-primary btn-lg">submit</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="custOrdersHeader">In Queue:</div>
+        </div>
+      </div>
+      <div class="containPendingOrders">
+        <div class="custQueue">
+          <div class="row orderInfo">
+            <div class="col-md-4 orderId">Order ID</div>
+            <div class="col-md-4 custName">customer name</div>
+            <div class="col-md-4 phoneNumber">phone number</div>
+          </div>
+          <div class="row foodItem">
+            <div class="col-md-2"></div>
+            <div class="col-md-6 itemName">food</div>
+            <div class="col-md-2 quantity">quantity</div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="row clearQueue">
+            <div class="col-md-2"></div>
+            <div class="text-center col-md-4">Pending for pickup....</div>
+            <div class="text-center col-md-4">
+            <a href="#" class="btn btn-primary btn-lg">Complete Order</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
