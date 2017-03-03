@@ -15,19 +15,18 @@ itemsRoutes.get("/hello", (req, res) => {
 });
 
 
-// itemsRoutes.get("/:id",function(req, res) {
+itemsRoutes.get("/:id",function(req, res) {
 
-//      // I case of EJS so I can use :id and know the Restaurant name
-//       let restaurantid = req.params.id;
-//       // I case of AJAX so I get the restaurant id from the client
-//       // let restaurantid = req.body.id;
-//     DataHelpers.getMenueItems(restaurantid, (err, items) =>{
+     // I case of EJS so I can use :id and know the Restaurant name
+      let restaurantid = req.params.id;
+      // I case of AJAX so I get the restaurant id from the client
+      // let restaurantid = req.body.id;
+    DataHelpers.getMenueItems(restaurantid,(items) => {
 
-//           console.log(items)
-//           res.send("<html><body>bye <b>World</b></body></html>\n");
-
-//        })
-//   });
+      console.log(items);
+      res.send("<html><body>nima <b>World</b></body></html>\n");
+    });
+  });
 
 
 // itemsRoutes.POST("/cart/:items_id", function(req, res) {
