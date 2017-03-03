@@ -42,24 +42,22 @@ itemsRoutes.get("/cart", function(req, res) {
 
 // user gets updates on the delivary time
 itemsRoutes.get("/order", function(req, res) {
-
-res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
-        res.status(200);
+  res.render("confirmation.ejs");
+  res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
+  res.status(200);
 });
 
 
 // owner to get the new order
-itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
-
-
-        res.status(200);
+itemsRoutes.get("/restaurants/1/orders", function(req, res) {
+  res.render("owner.ejs");
+  res.status(200);
 });
 
 // owner to get the queued orders
 itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
-
-
-        res.status(200);
+  res.render("owner.ejs");
+  res.status(200);
 });
 
 

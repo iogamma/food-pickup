@@ -1,0 +1,17 @@
+.boxbox {
+  background-color: black;
+  border-radius: 8px;
+  border: solid black;
+  padding: 15%;
+    text-align: center;
+}
+
+.order_ready {
+  color: #4286f4;
+  font-size: 3em;
+}
+
+.time {
+  color: white;
+  font-size: 2em;
+}
