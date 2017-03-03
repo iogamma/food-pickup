@@ -1,5 +1,3 @@
-
-
 module.exports = function queriesAndFunctions(db) {
   return {
 
@@ -7,37 +5,35 @@ module.exports = function queriesAndFunctions(db) {
   getMenueItemsBasic: function() {
 
 
-       console.log(db.Menu.menueItems)
+       console.log(db)
 
 
     },
-/*--------
-  getMenueItems: (restaurantId, callback)=>  {
+// --------
+  // getMenueItems: (restaurantId, callback)=>  {
 
-      db.knex.select("items.id","items.description","items.name","items.price").from("items").where({'restaurant_id': restaurantId }).asCallback(function(err, values) {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log(values);
-        }
-             console.log(db.Menu.menueItems)
-    },
-
-
-    InsertNewToOrders:   (userid, itemID, QuantityOfItem, callback)=> {
+  //     db.knex.select("items.id","items.description","items.name","items.price").from("items").where({'restaurant_id': restaurantId }).asCallback(function(err, values) {
+  //       if(err) {
+  //         console.log(err);
+  //       } else {
+  //         console.log(values);
+  //       }
+  //            console.log(db.Menu.menueItems)
+  //   },
 
 
-      db.knex.insert({
-      user_id: userid,
-      long: data.long,
-      user_id: data.user_id
-    }).into('orders').then(done);
-    },
+  //   InsertNewToOrders:   (userid, itemID, QuantityOfItem, callback)=> {
 
-    createUrl: (data, done) => {
+  //     knex('restaurantdb')insert({
+  //     user_id: userid,
+  //     long: data.long,
+  //     user_id: data.user_id
+  //   }).into('orders').then(done);
+  //   },
 
-  },
+  //   createUrl: (data, done) => {
 
+  // },
 
 
 
@@ -45,7 +41,8 @@ module.exports = function queriesAndFunctions(db) {
 
 
 
-*/
+
+
 
 
 

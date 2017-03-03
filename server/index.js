@@ -1,4 +1,3 @@
-
 "use strict";
 
 // Basic express setup:

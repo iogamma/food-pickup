@@ -14,38 +14,45 @@ itemsRoutes.get("/hello", (req, res) => {
 
 });
 
-/*
-itemsRoutes.get("/:id",function(req, res) {
 
-     // I case of EJS so I can use :id and know the Restaurant name
-      let restaurantid = req.params.id;
-      // I case of AJAX so I get the restaurant id from the client
-      // let restaurantid = req.body.id;
-    DataHelpers.getMenueItems(restaurantid, (err, items) =>{
+// itemsRoutes.get("/:id",function(req, res) {
 
-          console.log(items)
-          res.send("<html><body>bye <b>World</b></body></html>\n");
+//      // I case of EJS so I can use :id and know the Restaurant name
+//       let restaurantid = req.params.id;
+//       // I case of AJAX so I get the restaurant id from the client
+//       // let restaurantid = req.body.id;
+//     DataHelpers.getMenueItems(restaurantid, (err, items) =>{
 
-       }
-  });
+//           console.log(items)
+//           res.send("<html><body>bye <b>World</b></body></html>\n");
+
+//        })
+//   });
 
 
-itemsRoutes.POST("/cart/:items_id", function(req, res) {
+// itemsRoutes.POST("/cart/:items_id", function(req, res) {
 
       // find user id from session :
 
 
       // if the id is sent correcty to /:items_id
-        let itemid = req.params.id;
+        // let itemid = req.params.id;
       // or if the itemid comes in the body
       //   let itemid = req.body.id
 
       // if the quantity of the order
-        let itemQuantity = req.body.quantity;
+        // let itemQuantity = req.body.quantity;
 
 //We check if order Id exist
 
-      //if(req.session.order_id) {
+      // if(!req.session.order_id) {
+      //   knex('restaurantdb')
+      //   .insert({
+      //     user_id:req.session.user_id,
+      //     time_of_order:new Date()
+      //   })
+
+
 
 
 
@@ -54,31 +61,31 @@ itemsRoutes.POST("/cart/:items_id", function(req, res) {
 
 //  1- creat new order
 
-    DataHelpers.creatOrder(userid, itemid, itemQuantity, (err, items) =>{
+  //   DataHelpers.creatOrder(userid, itemid, itemQuantity, (err, items) =>{
 
 
-          DataHelpers.InsertNewToOrders(userid, itemid, itemQuantity, (err, items) =>{
+  //         DataHelpers.InsertNewToOrders(userid, itemid, itemQuantity, (err, items) =>{
 
 
-          console.log(items)
-          res.send("<html><body>bye <b>World</b></body></html>\n");
+  //         console.log(items)
+  //         res.send("<html><body>bye <b>World</b></body></html>\n");
 
-             }
-         });
-
-
-
+  //            }
+  //        });
 
 
 
 
-       // }
 
 
 
-  });
+  //      // }
 
-*/
+
+
+  // });
+
+
 
 
 
