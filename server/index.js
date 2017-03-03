@@ -28,7 +28,7 @@ const queries = require("./lib/queries.js")(db);
 const Routes = require("./routes/items")(queries);
 
 // Mount the tweets routes at the "/tweets" path prefix:
-app.use("/restaurants", Routes);
+app.use("/", Routes);
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
