@@ -12,7 +12,6 @@ $(document).ready(function(){
         users: {id:2, name:"Abc", phone_number: 6041231234},
         items: [{id: 3, name: "chips", quantity: 5}]
       }
-      console.log("hello")
       $('.ordersList').append(createOrderElement(data));
       $('.queueList').append(createQueueElement(data));
   }
@@ -54,7 +53,12 @@ $(document).ready(function(){
     $foodItem.append($itemName, $quantity);
     $responseToOrder.append($informMsg, $inputCol, $submitCol);
 
-    return $order;
+    //whether or not to append
+    if (invoice.orderId = 0){
+      return;
+    } else {
+      return $order;
+    }
   }
 
   //element for order to queue list
@@ -88,8 +92,6 @@ $(document).ready(function(){
     return $order;
   }
 
-
-
   // function loadOrders() {
   //   $.ajax({
   //       url: 'restaurants/id1/orders',
@@ -102,8 +104,9 @@ $(document).ready(function(){
 
   renderOrders();
 
-
-
-
-
 });
+
+
+
+
+
