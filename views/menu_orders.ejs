@@ -40,7 +40,9 @@
       <div class="right col-md-3">
         <div class="order_items">
           <span class="order_total">Your total is $4</span>
-          <button class='btn btn-success'>Order</button>
+          <form action="/order" method="POST">
+          <button class="btn btn-success" type="submit" value="true">Order</button>
+          </form>
         </div>
       </div>
     </div>
