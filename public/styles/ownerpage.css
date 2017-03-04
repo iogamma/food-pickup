@@ -1,3 +1,7 @@
+.clearQueue {
+  padding-top: 1em;
+}
+
 .custOrders {
   border-color: #f4a641;
   border-style: solid;
@@ -17,10 +21,23 @@
   padding: 1em;
 }
 
+.foodItem {
+  border-bottom: solid 1px;
+  padding: 0.5em 0em;
+}
+
 .main {
   position: relative;
   padding-top: 12em;
 }
 
+.orderInfo {
+  border-bottom: solid 1px;
+  padding-bottom: 1em;
+}
+
+.responseToOrder {
+  padding-top: 1em;
+}
 
 

@@ -91,22 +91,24 @@ itemsRoutes.get("/order", function(req, res) {
 
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 
-    let restaurantId = req.params.restaurants_id;
+  let restaurantId = req.params.restaurants_id;
 
-    DataHelpers.ownerOrders(restaurantId, (orders) => {
-
-    console.log(orders)
-res.send("<html><body>order with status submitted<b>!!!</b></body></html>\n");
-
-    });
-
-
+  DataHelpers.ownerOrders(restaurantId, (orders) => {
+    let templateVars = {};
+    templateVars = {myOrders: orders}
+    console.log(templateVars)
+    res.render("owner.ejs", templateVars);
+    res.status(200);
+  });
 });
 
 // owner to get the queued orders
 itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
-  res.render("owner.ejs");
-  res.status(200);
+
+
+    res.render("owner.ejs");
+    res.status(200);
+
 });
 
 

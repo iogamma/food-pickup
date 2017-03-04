@@ -46,50 +46,11 @@
         <div class="currentOrders row">
           <div class="ordersList col-md-12">
             <div class="header row">
-              <div class="col-md-12 custOrdersHeader">Current Orders</div>
-            </div>
-
-            <!--loop-->
-
-            <div class="row custOrders">
-              <div class="col-md-12">
-                <div class= "row orderInfo">
-                  <div class= "col-md-3 orderId">
-                    <% order.orderId %>
-                  </div>
-                  <div class= "col-md-6 custName">
-                    <% users.name %>
-                  </div>
-                  <div class= "col-md-3 phoneNumber">
-                    <% users.phone_number %>
-                  </div>
-                </div>
-                <div class= "row foodItem">
-                  <div class= "col-md-10 itemName">
-                    <% items.name %>
-                  </div>
-                  <div class= "col-md-2 quantity">
-                    <% items.quantity %>
-                  </div>
-                </div>
-                <div class= "row responseToOrder">
-                  <div class= "text-center col-md-6">
-                    Please inform customer of order pick up time
-                  </div>
-                  <form>
-                    <div class= "col-md-2">
-                      <input type="text" class="form-control" id="deliveryTime" placeholder="minutes">
-                    </div>
-                    <div class= "col-md-4">
-                      <a href="#" class="btn btn-primary btn-lg">submit</a>
-                    </div>
-                  </form>
-                </div>
+              <div class="col-md-12 custOrdersHeader">
+                Current Orders
               </div>
             </div>
-
-            <!-- } -->
-
+              <% include partials/current_orders %>
           </div>
         </div>
         <div class="queue row">
@@ -97,42 +58,7 @@
             <div class="header row">
               <div class="col-md-12 custOrdersHeader">In Queue</div>
             </div>
-
-            <!--loop-->
-
-            <div class="row custOrders">
-              <div class="col-md-12">
-                <div class= "row orderInfo">
-                  <div class= "col-md-3 orderId">
-                    <% order.orderId %>
-                  </div>
-                  <div class= "col-md-6 custName">
-                    <% users.name %>
-                  </div>
-                  <div class= "col-md-3 phoneNumber">
-                    <% users.phone_number %>
-                  </div>
-                </div>
-                <div class= "row foodItem">
-                  <div class= "col-md-10 itemName">
-                    <% items.name %>
-                  </div>
-                  <div class= "col-md-2 quantity">
-                    <% items.quantity %>
-                  </div>
-                </div>
-                <div class= "row clearQueue">
-                  <div class= "text-center col-md-6">
-                    Pending for pick up....
-                  </div>
-                  <a href="#" class="btn btn-primary btn-lg" value="true">Complete Order</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- } -->
-
-
+              <% include partials/_queue %>
           </div>
         </div>
         <div class="row"></div>

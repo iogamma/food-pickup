@@ -1,0 +1,45 @@
+
+
+<% myOrders.forEach(function(element, index) { %>
+  <% if (myOrders[index].ready_time != null && myOrders[index].status != "completed") { %>
+    <div class="row custOrders">
+      <div class="col-md-12">
+        <div class= "row orderInfo">
+          <div class= "col-md-3 orderId">
+            Order ID:
+            <%= myOrders[index].order_id %>
+          </div>
+          <div class= "col-md-4 custName">
+            Customer name:
+            <%= myOrders[index].username %>
+          </div>
+          <div class= "col-md-5 phoneNumber">
+            Phone Number:
+            <%= myOrders[index].phone_number %>
+          </div>
+        </div>
+        <div class= "row foodItem">
+          <div class= "col-md-10 itemName">
+            Item:
+            <%= myOrders[index].name %>
+          </div>
+          <div class= "col-md-2 quantity">
+            Quantity:
+            <%= myOrders[index].quantity %>
+          </div>
+        </div>
+        <div class= "row clearQueue">
+          <div class= "text-center col-md-6">
+            Pending for pick up....
+          </div>
+          <div class= "text-center col-md-6">
+            <button type="button" class="btn btn-primary" value="true">Complete Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } else { %>
+    <div></div>
+  <% } %>
+<% }); %>
+
