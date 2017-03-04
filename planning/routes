@@ -6,8 +6,8 @@ USER
 user able to login                      POST                       /login
 user see main page                      GET                        /restaurants
 user view menu                          GET                        /restaurants/:restaurants_id/
-update quantity of food                 PUT                        /cart/:items_id
-update shopping carts                   GET                        /cart
+update quantity of food                 POST                       /cart/:items_id
+view qty for item                       GET                        /cart/:items_id
 place order                             POST                       /order
 seeing status of order                  GET                        /order
 OWNER

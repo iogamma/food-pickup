@@ -34,11 +34,11 @@ itemsRoutes.get("/restaurants/:id", (req, res) => {
 });
 
 // Ajax to keep checking the status of the cart and display
-itemsRoutes.get("/cart", function(req, res) {
+// itemsRoutes.get("/cart", function(req, res) {
 
 
-  res.status(200);
-});
+//   res.status(200);
+// });
 
 // user gets updates on the delivary time
 itemsRoutes.get("/order", function(req, res) {
@@ -62,35 +62,56 @@ itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
   res.status(200);
 });
 
-itemRoutes.get("/cart", function(req, res) => {
-  DataHelpers.retrieveData((value) => {
+itemsRoutes.get("/cart", (req, res) => {
+  DataHelpers.retrieveData(1, (value) => {
+    console.log(value);
     res.status(200);
   })
 })
 
 
-itemRoutes.post("/login", function(req, res) => {
-  DataHelpers.insertNewOrders(req.session.user_id, (value) => {
+itemsRoutes.get("/login", (req, res) => {
+  DataHelpers.insertNewOrder(req.session.user_id, (value) => {
     res.status(200);
   })
 })
 
-itemsRoutes.post("/order", function(req, res) => {
-  DataHelpers.updateCurrentOrder("placed", () => {
-    DataHelpers.CreateNewOrder(req.session.user_id, (value) => {
+itemsRoutes.post("/order", (req, res) => {
+  DataHelpers.updateCurrentOrder(req.session,user_id, "placed", () => {
+    DataHelpers.createNewOrder(req.session.user_id, (value) => {
     res.status(200);
    })
   })
 })
 
-// Event listeners and uodating items before submission
-itemsRoutes.post("/cart/:items_id", function(req, res) {
+// itemsRoutes.get("/cart/:items_id", (req, res) => {
+  
+//   DataHelpers.findCurrentOrder(1, (value) => {
+//     // console.log(value);
+//     let result = value[0].id;
+//     // console.log('result: ', result)
+//     let itemId = req.params.items_id;
+//     // console.log('input: ', itemId);
+//     let quantity = 6; //to be updated
+//     DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
+//       console.log('item_id: ', itemId,'currentOrder: ', result,'quantity: ', quantity);
+//       res.status(200);
+//     }); // insertOrUpdate ends
+//   }); // findCurrentOrder ends
+// });
+
+// Modify database based on users changing quantity
+itemsRoutes.post("/cart/:items_id", (req, res) => {
   
   DataHelpers.findCurrentOrder(req.session.user_id, (value) => {
+    // console.log(value);
     let result = value[0].id;
-    let itemId = req.body.id;
+    // console.log('result: ', result)
+    let itemId = req.params.items_id;
+    // console.log('input: ', itemId);
     let quantity = req.body.quantity; //to be updated
     DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
+      console.log('item_id: ', itemId,'currentOrder: ', result,'quantity: ', quantity);
       res.status(200);
     }); // insertOrUpdate ends
   }); // findCurrentOrder ends
