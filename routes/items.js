@@ -63,7 +63,7 @@ itemsRoutes.post('/logout', (req, res) => {
 itemsRoutes.get("/restaurants/:id", (req, res) => {
   const restaurantId = req.params.id;
 
-  DataHelpers.getMenueItems(restaurantId, (menuItems) => {
+  DataHelpers.getMenuItems(restaurantId, (menuItems) => {
     const templateVars = {
       userId        : req.session.user_id,
       restaurantId  : restaurantId,
