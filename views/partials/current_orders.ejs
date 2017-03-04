@@ -1,0 +1,51 @@
+
+
+<% myOrders.forEach(function(element, index) { %>
+  <% if (myOrders[index].ready_time != null) { %>
+    <div></div>
+  <% } else { %>
+    <div class="row custOrders">
+      <div class="col-md-12">
+        <div class= "row orderInfo">
+          <div class= "col-md-3 orderId">
+            Order ID:
+            <%= myOrders[index].order_id %>
+          </div>
+          <div class= "col-md-4 custName">
+            Customer name:
+             <%= myOrders[index].username %>
+          </div>
+          <div class= "col-md-5 phoneNumber">
+            Phone Number:
+            <%= myOrders[index].phone_number %>
+          </div>
+        </div>
+        <div class= "row foodItem">
+          <div class= "col-md-10 itemName">
+            Item:
+            <%= myOrders[index].name %>
+          </div>
+          <div class= "col-md-2 quantity">
+            Quantity:
+            <%= myOrders[index].quantity %>
+          </div>
+        </div>
+        <div class= "row responseToOrder">
+          <div class= "text-center col-md-6">
+            Please inform customer of order pick up time:
+          </div>
+          <form action="/login" method="POST">
+            <div class= "text-right col-md-3">
+              <input type="number" class="form-control" id="ready_time" name="ready_time" placeholder="minutes"/>
+              <input type="hidden" class="form-control" id="order_id" name="order_id" value=<%= myOrders[index].order_id %> />
+            </div>
+            <div class= "text-center col-md-3">
+              <input type="submit" class="btn btn-primary"></input>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% } %>
+<% }); %>
+
