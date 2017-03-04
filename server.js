@@ -44,11 +44,6 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/", Routes);
 
-// Home page
-app.get("/", (req, res) => {
-  res.render("index.ejs");
-});
-
 const server = app.listen(PORT, () => {
   const address = server.address();
   logger.info('Server listening on port:' , address.port);
