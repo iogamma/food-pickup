@@ -1,5 +1,11 @@
 const express       = require('express');
 const itemsRoutes  = express.Router();
+const cookieSession = require('cookie-session');
+
+itemsRoutes.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}));
 
 module.exports = function(DataHelpers) {
 
@@ -8,11 +14,20 @@ module.exports = function(DataHelpers) {
 
 // List of restaurants
 
- itemsRoutes.get("/restaurants", function(req, res) {
+itemsRoutes.get("/restaurants", function(req, res) {
 
-        res.render("index.ejs");
-  });
+});
 
+// login and set user cookie
+itemsRoutes.get("/login/:id", function(req, res) {
+  //TODO: Get username from query string
+  let usersId = req.params.id;
+  //TODO: Assign a cookie session
+  if (usersid < 3) {
+    req.session.user_id = usersId;
+  }
+  res.redirect('/');
+});
 
 // Load the menu of the chosen restaurant
 itemsRoutes.get("/restaurants/:id", (req, res) => {
