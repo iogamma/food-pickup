@@ -36,8 +36,8 @@ itemsRoutes.get("/restaurants/:id", (req, res) => {
   DataHelpers.getMenueItems(restaurantId, (menuitems) => {
 
     console.log(menuitems)
-res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
-
+// res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
+    res.render("menu_orders.ejs", menuitems);
     });
 
 });
@@ -126,8 +126,7 @@ itemsRoutes.post("/cart/:items_id", function(req, res) {
 
 // here we get a boolean that shows if the order has been submitted
 itemsRoutes.post("/order", function(req, res) {
-
-res.status(200);
+  res.redirect("/order");
 
 
 });
