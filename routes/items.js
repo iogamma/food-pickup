@@ -10,7 +10,16 @@ module.exports = function(DataHelpers) {
 
  itemsRoutes.get("/restaurants", function(req, res) {
 
-        res.render("index.ejs");
+  DataHelpers.getAllRestaurants((restaurants) => {
+
+    console.log(restaurants)
+
+
+    res.render("index.ejs",restaurants);
+
+    });
+
+
   });
 
 
@@ -51,8 +60,15 @@ res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n
 // owner to get the new order
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 
+    let restaurantId = req.params.restaurants_id;
 
-        res.status(200);
+    DataHelpers.ownerOrders(restaurantId, (orders) => {
+
+    console.log(orders)
+res.send("<html><body>order with status submitted<b>!!!</b></body></html>\n");
+
+    });
+
 });
 
 // owner to get the queued orders
