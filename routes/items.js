@@ -1,5 +1,5 @@
 const express       = require('express');
-const itemsRoutes  = express.Router();
+const itemsRoutes   = express.Router();
 
 module.exports = function(DataHelpers) {
 
@@ -24,10 +24,10 @@ itemsRoutes.get("/restaurants/:id", (req, res) => {
 
   let restaurantId = req.params.id;
 
-  DataHelpers.getMenueItems(restaurantId, (menuitems) => {
+  DataHelpers.getMenuItems(restaurantId, (menuitems) => {
 
-    console.log(menuitems)
-res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
+  console.log(menuitems)
+  res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
 
     });
 
@@ -37,14 +37,14 @@ res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html
 itemsRoutes.get("/cart", function(req, res) {
 
 
-        res.status(200);
+  res.status(200);
 });
 
 // user gets updates on the delivary time
 itemsRoutes.get("/order", function(req, res) {
 
 res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
-        res.status(200);
+  res.status(200);
 });
 
 
@@ -52,21 +52,49 @@ res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 
 
-        res.status(200);
+  res.status(200);
 });
 
 // owner to get the queued orders
 itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
+  
 
-
-        res.status(200);
+  res.status(200);
 });
 
+itemRoutes.get("/cart", function(req, res) => {
+  DataHelpers.retrieveData((value) => {
+    res.status(200);
+  })
+})
+
+
+itemRoutes.post("/login", function(req, res) => {
+  DataHelpers.insertNewOrders(req.session.user_id, (value) => {
+    res.status(200);
+  })
+})
+
+itemsRoutes.post("/order", function(req, res) => {
+  DataHelpers.updateCurrentOrder("placed", () => {
+    DataHelpers.CreateNewOrder(req.session.user_id, (value) => {
+    res.status(200);
+   })
+  })
+})
 
 // Event listeners and uodating items before submission
 itemsRoutes.post("/cart/:items_id", function(req, res) {
-
-  res.status(200);
+  
+  DataHelpers.findCurrentOrder(req.session.user_id, (value) => {
+    let result = value[0].id;
+    let itemId = req.body.id;
+    let quantity = req.body.quantity; //to be updated
+    DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
+      res.status(200);
+    }); // insertOrUpdate ends
+  }); // findCurrentOrder ends
+  
 
         // find user id from session :
 
@@ -104,13 +132,12 @@ itemsRoutes.post("/cart/:items_id", function(req, res) {
         //         res.send("<html><body>bye <b>World</b></body></html>\n");
 
         //            }
-
-  });
+});
 
 // here we get a boolean that shows if the order has been submitted
 itemsRoutes.post("/order", function(req, res) {
 
-res.status(200);
+  res.status(200);
 
 
 });
@@ -118,7 +145,7 @@ res.status(200);
 // Owner submites delivary time
 itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
 
-res.status(200);
+  res.status(200);
 
 
 });
@@ -126,7 +153,7 @@ res.status(200);
 // login and set user cookie
 itemsRoutes.post("/login", function(req, res) {
 
-res.status(200);
+  res.status(200);
 
 
 });
