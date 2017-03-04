@@ -43,8 +43,8 @@ $(document).ready(function(){
     //   console.log(2);
     //   $(".center").append($item);
     // }
-    $(".center").append($item);
-    $(".center").append($anotherItem);
+    $(".restaurant_menu").append($item);
+    $(".restaurant_menu").append($anotherItem);
 
 
     // for(id of items){
@@ -52,15 +52,13 @@ $(document).ready(function(){
     // }
   }
 
-  // function loadOrders() {
-  //   $.ajax({
-  //       url: 'restaurants/id1/orders',
-  //       method: 'GET',
-  //       success: renderOrders
-  //   });
-  // }
-  // //RUN THIS FUNCTION EVERY 15 SEC WHEN OWNER LOGGED IN
-  // loadOrders();
+  function loadMenu() {
+    $.ajax({
+        url: 'restaurants/',
+        method: 'GET',
+        success: renderOrders
+    });
+  }
 
-  renderMenu();
+//  renderMenu();
 });

@@ -17,11 +17,13 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "ejs-lint": "^0.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "knex": "./node_modules/.bin/knex"
+    "knex": "./node_modules/.bin/knex",
+    "ejslint": "./node_modules/.bin/ejslint"
   },
   "repository": {
     "type": "git",

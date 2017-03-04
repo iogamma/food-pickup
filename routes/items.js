@@ -19,17 +19,17 @@ itemsRoutes.get('/', (req, res) => {
 
 // List of restaurants page
 itemsRoutes.get("/restaurants", (req, res) => {
-    DataHelpers.getAllRestaurants((restaurants) => {
-      templateVars = {
-        userId      : req.session.user_id,
-        restaurants : restaurants
-      };
-      res.render("index.ejs", templateVars);
-    });
+  DataHelpers.getAllRestaurants((restaurants) => {
+    const templateVars = {
+      userId      : req.session.user_id,
+      restaurants : restaurants
+    };
+    res.render("index.ejs", templateVars);
   });
+});
 
 // login customer and set user cookie
-itemsRoutes.get("/login/:id", (req, res) => {
+itemsRoutes.get("/login/c/:id", (req, res) => {
   // Get userId from query string
   const custId = req.params.id;
   // Assign a cookie session
@@ -40,12 +40,11 @@ itemsRoutes.get("/login/:id", (req, res) => {
 });
 
 // login owner and set user cookie
-itemsRoutes.get("/login/o/:id", (req, res) => {
+itemsRoutes.get("/login/r/:id", (req, res) => {
   // Get userId from query string
   const restaurantId = req.params.id;
   // Assign a cookie session
   req.session.user_id = restaurantId;
-  console.log(req.session.user_id);
 
   res.redirect('/restaurants');
 });
@@ -62,28 +61,22 @@ itemsRoutes.post('/logout', (req, res) => {
 
 // Load the menu of the chosen restaurant
 itemsRoutes.get("/restaurants/:id", (req, res) => {
+  const restaurantId = req.params.id;
 
-// In case of EJS so I can use :id and know the Restaurant name
-//       let restaurantid = req.params.id;
-// In case of AJAX so I get the restaurant id from the client
-//      let restaurantid = req.body.id;
-
-  let restaurantId = req.params.id;
-
-  DataHelpers.getMenueItems(restaurantId, (menuitems) => {
-
-    console.log(menuitems)
-// res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
-    res.render("menu_orders.ejs", menuitems);
-    });
-
+  DataHelpers.getMenueItems(restaurantId, (menuItems) => {
+    const templateVars = {
+      userId        : req.session.user_id,
+      restaurantId  : restaurantId,
+      menuItems     : menuItems
+    };
+    console.log(menuItems);
+    res.render("menu_orders.ejs", templateVars);
+  });
 });
 
 // Ajax to keep checking the status of the cart and display
 itemsRoutes.get("/cart", function(req, res) {
-res.render("menu_orders.ejs");
-
-
+  res.render("menu_orders.ejs");
 });
 
 // user gets updates on the delivary time
