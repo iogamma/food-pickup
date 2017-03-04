@@ -1,9 +1,10 @@
 const express       = require('express');
 const itemsRoutes  = express.Router();
+//var groupArray = require('group-array');
 
 // Twilio Credentials
-var accountSid = 'AC1463a063de7f31831cb44ff36db17c03';
-var authToken = '4743373a9bbe7ad3f30693d77518a3ba';
+var accountSid = 'AC8fdabc7d09216813636cc2828fbcb42a';
+var authToken = 'e2388f2a457ca51d5afbf02d90def812';
 
 var twilio = require('twilio');
 var Client = new twilio.RestClient(accountSid, authToken);
@@ -69,23 +70,20 @@ itemsRoutes.get("/order", function(req, res) {
 // owner to get the new order
 
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
-
-    let restaurantId = req.params.restaurants_id;
-
-    DataHelpers.ownerOrders(restaurantId, (orders) => {
-
-    console.log(orders)
-res.send("<html><body>order with status submitted<b>!!!</b></body></html>\n");
-
-    });
-
-
-});
-
-// owner to get the queued orders
-itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
-  res.render("owner.ejs");
-  res.status(200);
+ // Get userId from query string
+ const restaurantId = req.params.restaurants_id;
+ // Assign a cookie session
+ req.session.user_id = restaurantId;
+ DataHelpers.ownerOrders(restaurantId, (orders) => {
+   let templateVars = {};
+   templateVars = {
+     myOrders: orders,
+     userId:   restaurantId
+   }
+   console.log(templateVars)
+   res.render("owner.ejs", templateVars);
+   res.status(200);
+ });
 });
 
 
@@ -94,44 +92,8 @@ itemsRoutes.post("/cart/:items_id", function(req, res) {
 
   res.status(200);
 
-        // find user id from session :
 
-
-        // if the id is sent correcty to /:items_id
-        // let itemid = req.params.id;
-        // or if the itemid comes in the body
-        //   let itemid = req.body.id
-
-        // if the quantity of the order
-        // let itemQuantity = req.body.quantity;
-
-        //We check if order Id exist
-
-        // if(!req.session.order_id) {
-
-       // DataHelpers.createNewToOrder(restaurantId, (menuitems) => {
-
-        //});
-
-
-
-        //} else {
-        // if exists then we need to create a new order row + retriving the id that is chosen and either send it in a session or send it to
-
-        //  1- creat new order
-
-        //   DataHelpers.creatOrder(userid, itemid, itemQuantity, (err, items) =>{
-
-
-        //         DataHelpers.InsertNewToOrders(userid, itemid, itemQuantity, (err, items) =>{
-
-
-        //         console.log(items)
-        //         res.send("<html><body>bye <b>World</b></body></html>\n");
-
-        //            }
-
-  });
+});
 
 // here we get a boolean that shows if the order has been submitted
 itemsRoutes.post("/order", function(req, res) {
@@ -144,7 +106,23 @@ res.status(200);
 // Owner submites delivary time
 itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
 
-res.status(200);
+  let tempOrderId = 2;
+  let tempDeliveryTime = null;
+
+  DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
+
+    console.log("data updated!")
+    res.status(200);
+
+  });
+
+
+});
+
+// Owner submites completed item
+itemsRoutes.post("/restaurants/:restaurants_id/completed", function(req, res) {
+
+
 
 
 });
@@ -171,13 +149,15 @@ itemsRoutes.get("/update", function(req, res) {
         });
 
 });
-
+// practicing twilio
 itemsRoutes.get("/twilio", function(req, res) {
 
+  let deliveryTime = '15 min'
+
 Client.messages.create({
-    to: "+16045188905",
-    from: "(604) 239-1549",
-    body: "Twilio works bitches!",
+    to: "+17788836554",
+    from: "+17786540355",
+    body: deliveryTime,
 }, function(err, message) {
     if (err) {
         console.error('twilio error', err.message)
@@ -189,6 +169,8 @@ Client.messages.create({
 res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
 
 });
+
+
 
 
 

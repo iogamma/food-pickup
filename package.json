@@ -9,6 +9,7 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.0",
+    "group-array": "^0.3.2",
     "knex": "^0.12.7",
     "knex-logger": "^0.1.0",
     "morgan": "^1.8.1",
