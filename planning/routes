@@ -13,3 +13,4 @@ seeing status of order                  GET                        /order
 OWNER
 display current orders                  GET                        /restaurants/:restaurants_id/orders
 submit estimated time for pickup        POST                       /restaurants/:restaurants_id/pickup
+the order status is completed           POST                       /restaurants/:restaurants_id/completed

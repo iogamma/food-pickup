@@ -1,6 +1,18 @@
 const express       = require('express');
 const itemsRoutes  = express.Router();
+
 const cookieSession = require('cookie-session');
+
+//var groupArray = require('group-array');
+
+// Twilio Credentials
+var accountSid = 'AC8fdabc7d09216813636cc2828fbcb42a';
+var authToken = 'e2388f2a457ca51d5afbf02d90def812';
+
+var twilio = require('twilio');
+var Client = new twilio.RestClient(accountSid, authToken);
+//require the Twilio module and create a REST client
+// var client = new require('twilio').RestClient(accountSid, authToken);
 
 itemsRoutes.use(cookieSession({
   name: 'session',
@@ -17,6 +29,7 @@ itemsRoutes.get('/', (req, res) => {
   res.redirect('/restaurants')
 });
 
+
 // List of restaurants page
 itemsRoutes.get("/restaurants", (req, res) => {
   DataHelpers.getAllRestaurants((restaurants) => {
@@ -25,6 +38,18 @@ itemsRoutes.get("/restaurants", (req, res) => {
       restaurants : restaurants
     };
     res.render("index.ejs", templateVars);
+
+  DataHelpers.getAllRestaurants((restaurants) => {
+
+    console.log(restaurants)
+
+
+    res.render("owner.ejs",restaurants);
+
+    });
+
+
+
   });
 });
 
@@ -89,6 +114,7 @@ itemsRoutes.get("/order", function(req, res) {
 
 // owner to get the new order
 
+
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 
   let restaurantId = req.params.restaurants_id;
@@ -102,12 +128,24 @@ itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
   });
 });
 
-// owner to get the queued orders
-itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
 
 
-    res.render("owner.ejs");
-    res.status(200);
+
+itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
+ // Get userId from query string
+ const restaurantId = req.params.restaurants_id;
+ // Assign a cookie session
+ req.session.user_id = restaurantId;
+ DataHelpers.ownerOrders(restaurantId, (orders) => {
+   let templateVars = {};
+   templateVars = {
+     myOrders: orders,
+     userId:   restaurantId
+   }
+   console.log(templateVars)
+   res.render("owner.ejs", templateVars);
+   res.status(200);
+ });
 
 });
 
@@ -117,48 +155,13 @@ itemsRoutes.post("/cart/:items_id", function(req, res) {
 
   res.status(200);
 
-        // find user id from session :
 
-
-        // if the id is sent correcty to /:items_id
-        // let itemid = req.params.id;
-        // or if the itemid comes in the body
-        //   let itemid = req.body.id
-
-        // if the quantity of the order
-        // let itemQuantity = req.body.quantity;
-
-        //We check if order Id exist
-
-        // if(!req.session.order_id) {
-
-       // DataHelpers.createNewToOrder(restaurantId, (menuitems) => {
-
-        //});
-
-
-
-        //} else {
-        // if exists then we need to create a new order row + retriving the id that is chosen and either send it in a session or send it to
-
-        //  1- creat new order
-
-        //   DataHelpers.creatOrder(userid, itemid, itemQuantity, (err, items) =>{
-
-
-        //         DataHelpers.InsertNewToOrders(userid, itemid, itemQuantity, (err, items) =>{
-
-
-        //         console.log(items)
-        //         res.send("<html><body>bye <b>World</b></body></html>\n");
-
-        //            }
-
-  });
+});
 
 // here we get a boolean that shows if the order has been submitted
 itemsRoutes.post("/order", function(req, res) {
-  res.redirect("/order");
+
+res.status(200);
 
 
 });
@@ -166,20 +169,80 @@ itemsRoutes.post("/order", function(req, res) {
 // Owner submites delivary time
 itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
 
-res.status(200);
+  let tempOrderId = 2;
+  let tempDeliveryTime = null;
+
+  DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
+
+    console.log("data updated!")
+    res.status(200);
+
+  });
 
 
 });
 
+
+
+// Owner submites completed item
+itemsRoutes.post("/restaurants/:restaurants_id/completed", function(req, res) {
+
+
+
+
+});
+
+
+
+// here we get a boolean that shows if the order has been submitted
+itemsRoutes.post("/order", function(req, res) {
+  res.redirect("/order");
+
+});
 // login and set user cookie
 itemsRoutes.post("/login", function(req, res) {
 
 res.status(200);
 
 
+
 });
 
+// nima testing route
+itemsRoutes.get("/update", function(req, res) {
 
+    let tempOrderId = 2;
+    let tempDeliveryTime = null;
+
+        DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
+
+            console.log("data updated!")
+            res.status(200);
+
+        });
+
+});
+// practicing twilio
+itemsRoutes.get("/twilio", function(req, res) {
+
+  let deliveryTime = '15 min'
+
+  Client.messages.create({
+    to: "+17788836554",
+    from: "+17786540355",
+    body: deliveryTime,
+  }, function(err, message) {
+      if (err) {
+        console.error('twilio error', err.message)
+        return;
+      }
+      console.log(message.sid);
+
+    });
+
+  res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
+
+});
 
 
 
