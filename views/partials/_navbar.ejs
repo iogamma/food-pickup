@@ -8,8 +8,13 @@
         <li class="active"><a href="localhost:8080/restaurants">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login Customer</a></li>
+        <li><a href="/login/1"><span class="glyphicon glyphicon-log-in"></span> Login Customer</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login Owner</a></li>
+        <li>
+          <form  method="post" action="/logout">
+            <button class="btn btn-primary" type='submit'>Logout</span>
+          </form>
+        </li>
       </ul>
     </div>
   </div>

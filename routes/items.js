@@ -20,14 +20,30 @@ itemsRoutes.get("/restaurants", function(req, res) {
 
 // login and set user cookie
 itemsRoutes.get("/login/:id", function(req, res) {
-  //TODO: Get username from query string
-  let usersId = req.params.id;
+  //Get userId from query string
+  const usersId = req.params.id;
+  // const templateVars = {
+  //   user: userInDatabase,
+  //   tryMeURL: tryMeURL
+  // };
   //TODO: Assign a cookie session
-  if (usersid < 3) {
+  if (usersId < 3) {
     req.session.user_id = usersId;
+  }
+
+  res.redirect('/');
+});
+
+itemsRoutes.post('/logout', function(req, res) {
+  //TODO: Delete a cookie session
+  console.log(req.session === true);
+  if (req.session) {
+    req.session = null;
   }
   res.redirect('/');
 });
+
+
 
 // Load the menu of the chosen restaurant
 itemsRoutes.get("/restaurants/:id", (req, res) => {

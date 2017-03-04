@@ -46,7 +46,7 @@ app.use("/", Routes);
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("menu_orders");
+  res.render("index.ejs");
 });
 
 const server = app.listen(PORT, () => {
