@@ -26,8 +26,9 @@
     <!-- ownerpage css -->
     <link rel="stylesheet" type="text/css" href="../../styles/ownerpage.css">
 
-    <!-- Page script -->
+    <!-- Page script
     <script type="text/javascript" src="../../scripts/app.js"></script>
+    -->
 
   </head>
   <body>
@@ -48,81 +49,96 @@
               <div class="col-md-12 custOrdersHeader">Current Orders</div>
             </div>
 
+            <!--loop-->
+
+            <div class="row custOrders">
+              <div class="col-md-12">
+                <div class= "row orderInfo">
+                  <div class= "col-md-3 orderId">
+                    <% order.orderId %>
+                  </div>
+                  <div class= "col-md-6 custName">
+                    <% users.name %>
+                  </div>
+                  <div class= "col-md-3 phoneNumber">
+                    <% users.phone_number %>
+                  </div>
+                </div>
+                <div class= "row foodItem">
+                  <div class= "col-md-10 itemName">
+                    <% items.name %>
+                  </div>
+                  <div class= "col-md-2 quantity">
+                    <% items.quantity %>
+                  </div>
+                </div>
+                <div class= "row responseToOrder">
+                  <div class= "text-center col-md-6">
+                    Please inform customer of order pick up time
+                  </div>
+                  <form>
+                    <div class= "col-md-2">
+                      <input type="text" class="form-control" id="deliveryTime" placeholder="minutes">
+                    </div>
+                    <div class= "col-md-4">
+                      <a href="#" class="btn btn-primary btn-lg">submit</a>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- } -->
+
           </div>
         </div>
-
         <div class="queue row">
           <div class="queueList col-md-12">
             <div class="header row">
               <div class="col-md-12 custOrdersHeader">In Queue</div>
             </div>
 
+            <!--loop-->
+
+            <div class="row custOrders">
+              <div class="col-md-12">
+                <div class= "row orderInfo">
+                  <div class= "col-md-3 orderId">
+                    <% order.orderId %>
+                  </div>
+                  <div class= "col-md-6 custName">
+                    <% users.name %>
+                  </div>
+                  <div class= "col-md-3 phoneNumber">
+                    <% users.phone_number %>
+                  </div>
+                </div>
+                <div class= "row foodItem">
+                  <div class= "col-md-10 itemName">
+                    <% items.name %>
+                  </div>
+                  <div class= "col-md-2 quantity">
+                    <% items.quantity %>
+                  </div>
+                </div>
+                <div class= "row clearQueue">
+                  <div class= "text-center col-md-6">
+                    Pending for pick up....
+                  </div>
+                  <a href="#" class="btn btn-primary btn-lg" value="true">Complete Order</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- } -->
+
+
           </div>
         </div>
-
         <div class="row"></div>
       </div>
       <div class="right col-md-2"></div>
     </div>
-      <!-- <div class="row"> -->
-       <!--  <div class="col-md-12">
-          <div class="custOrdersHeader">Current Orders:</div>
-        </div>
-      </div>
-      <div class="containCustOrders">
-        <div class="custOrders">
-          <div class="row orderInfo">
-            <div class="col-md-4 orderId">Order ID</div>
-            <div class="col-md-4 custName">customer name</div>
-            <div class="col-md-4 phoneNumber">phone number</div>
-          </div>
-          <div class="row foodItem">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 itemName">food</div>
-            <div class="col-md-2 quantity">quantity</div>
-            <div class="col-md-2"></div>
-          </div>
-          <div class="row responseToOrder">
-            <div class="col-md-2"></div>
-            <div class="text-center col-md-4">Please inform customer of order pick up time</div>
-            <div class="text-center col-md-2">
-              <input type="text" class="form-control" id="deliveryTime" placeholder="minutes">
-            </div>
-            <div class="text-center col-md-2">
-            <a href="#" class="btn btn-primary btn-lg">submit</a>
-            </div>
-            <div class="col-md-2"></div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="custOrdersHeader">In Queue:</div>
-        </div>
-      </div>
-      <div class="containPendingOrders">
-        <div class="custQueue">
-          <div class="row orderInfo">
-            <div class="col-md-4 orderId">Order ID</div>
-            <div class="col-md-4 custName">customer name</div>
-            <div class="col-md-4 phoneNumber">phone number</div>
-          </div>
-          <div class="row foodItem">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 itemName">food</div>
-            <div class="col-md-2 quantity">quantity</div>
-            <div class="col-md-2"></div>
-          </div>
-          <div class="row clearQueue">
-            <div class="col-md-2"></div>
-            <div class="text-center col-md-4">Pending for pickup....</div>
-            <div class="text-center col-md-4">
-            <a href="#" class="btn btn-primary btn-lg">Complete Order</a>
-            </div>
-            <div class="col-md-2"></div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </body>
 </html>
