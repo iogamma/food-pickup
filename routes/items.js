@@ -16,7 +16,17 @@ module.exports = function(DataHelpers) {
 
 itemsRoutes.get("/restaurants", function(req, res) {
 
-});
+  DataHelpers.getAllRestaurants((restaurants) => {
+
+    console.log(restaurants)
+
+
+    res.render("index.ejs",restaurants);
+
+    });
+
+
+  });
 
 // login and set user cookie
 itemsRoutes.get("/login/:id", function(req, res) {
@@ -58,8 +68,8 @@ itemsRoutes.get("/restaurants/:id", (req, res) => {
   DataHelpers.getMenueItems(restaurantId, (menuitems) => {
 
     console.log(menuitems)
-res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
-
+// res.send("<html><body>Welcome to this sepcific restaurant<b>!!!</b></body></html>\n");
+    res.render("menu_orders.ejs", menuitems);
     });
 
 });
@@ -73,24 +83,32 @@ res.render("menu_orders.ejs");
 
 // user gets updates on the delivary time
 itemsRoutes.get("/order", function(req, res) {
-
-res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
-        res.status(200);
+  res.render("confirmation.ejs");
+  res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
+  res.status(200);
 });
 
 
 // owner to get the new order
+
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 
+    let restaurantId = req.params.restaurants_id;
 
-        res.status(200);
+    DataHelpers.ownerOrders(restaurantId, (orders) => {
+
+    console.log(orders)
+res.send("<html><body>order with status submitted<b>!!!</b></body></html>\n");
+
+    });
+
+
 });
 
 // owner to get the queued orders
 itemsRoutes.get("/restaurants/:restaurants_id/queue", function(req, res) {
-
-
-        res.status(200);
+  res.render("owner.ejs");
+  res.status(200);
 });
 
 
@@ -140,8 +158,7 @@ itemsRoutes.post("/cart/:items_id", function(req, res) {
 
 // here we get a boolean that shows if the order has been submitted
 itemsRoutes.post("/order", function(req, res) {
-
-res.status(200);
+  res.redirect("/order");
 
 
 });
