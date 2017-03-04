@@ -29,12 +29,16 @@
           </div>
         </div>
         <div class= "row clearQueue">
-          <div class= "text-center col-md-6">
-            Pending for pick up....
-          </div>
-          <div class= "text-center col-md-6">
-            <button type="button" class="btn btn-primary" value="true">Complete Order</button>
-          </div>
+
+          <form action="/restaurants/1/completed" method="POST">
+            <div class= "text-center col-md-6">
+              Pending for pick up....
+            </div>
+            <div class= "text-center col-md-6">
+              <input type="submit" class="btn btn-primary">Complete Order</button>
+              <input type="hidden" class="form-control" id="order_id" name="order_id" value=<%= myOrders[index].order_id %> />
+            </div>
+          </form>
         </div>
       </div>
     </div>
