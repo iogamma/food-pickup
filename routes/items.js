@@ -66,12 +66,9 @@ itemsRoutes.get("/login/c/:id", (req, res) => {
 
 // login owner and set user cookie
 itemsRoutes.get("/login/r/:id", (req, res) => {
-  // Get userId from query string
-  const restaurantId = req.params.id;
-  // Assign a cookie session
-  req.session.user_id = restaurantId;
 
-  res.redirect('/restaurants');
+
+  res.redirect('/');
 });
 
 itemsRoutes.post('/logout', (req, res) => {
@@ -116,12 +113,16 @@ itemsRoutes.get("/order", function(req, res) {
 
 
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
-
-  let restaurantId = req.params.restaurants_id;
-
+  // Get userId from query string
+  const restaurantId = req.params.restaurants_id;
+  // Assign a cookie session
+  req.session.user_id = restaurantId;
   DataHelpers.ownerOrders(restaurantId, (orders) => {
     let templateVars = {};
-    templateVars = {myOrders: orders}
+    templateVars = {
+      myOrders: orders,
+      userId:   restaurantId
+    }
     console.log(templateVars)
     res.render("owner.ejs", templateVars);
     res.status(200);
@@ -129,26 +130,22 @@ itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 });
 
 
-
-
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
- // Get userId from query string
- const restaurantId = req.params.restaurants_id;
- // Assign a cookie session
- req.session.user_id = restaurantId;
- DataHelpers.ownerOrders(restaurantId, (orders) => {
-   let templateVars = {};
-   templateVars = {
-     myOrders: orders,
-     userId:   restaurantId
+  // Get userId from query string
+  const restaurantId = req.params.restaurants_id;
+  // Assign a cookie session
+  req.session.user_id = restaurantId;
+  DataHelpers.ownerOrders(restaurantId, (orders) => {
+    let templateVars = {};
+    templateVars = {
+      myOrders: orders,
+      userId:   restaurantId
    }
-   console.log(templateVars)
-   res.render("owner.ejs", templateVars);
-   res.status(200);
- });
-
+    console.log(templateVars)
+    res.render("owner.ejs", templateVars);
+    res.status(200);
+  });
 });
-
 
 // Event listeners and uodating items before submission
 itemsRoutes.post("/cart/:items_id", function(req, res) {
@@ -213,6 +210,7 @@ itemsRoutes.get("/update", function(req, res) {
 
     let tempOrderId = 2;
     let tempDeliveryTime = null;
+
 
         DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
 
