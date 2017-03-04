@@ -1,5 +1,5 @@
 const express       = require('express');
-const itemsRoutes  = express.Router();
+const itemsRoutes   = express.Router();
 
 const cookieSession = require('cookie-session');
 
@@ -43,9 +43,7 @@ itemsRoutes.get("/restaurants", (req, res) => {
 
     console.log(restaurants)
 
-
     res.render("owner.ejs",restaurants);
-
     });
 
 
@@ -105,6 +103,7 @@ itemsRoutes.get("/cart", function(req, res) {
 itemsRoutes.get("/order", function(req, res) {
   res.render("confirmation.ejs");
   res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
+
   res.status(200);
 });
 
@@ -129,7 +128,6 @@ itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
   });
 });
 
-
 itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
   // Get userId from query string
   const restaurantId = req.params.restaurants_id;
@@ -151,6 +149,62 @@ itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
 itemsRoutes.post("/cart/:items_id", function(req, res) {
 
   res.status(200);
+});
+
+itemsRoutes.get("/cart", (req, res) => {
+  DataHelpers.retrieveData(1, (value) => {
+    console.log(value);
+    res.status(200);
+  })
+})
+
+
+itemsRoutes.get("/login", (req, res) => {
+  DataHelpers.insertNewOrder(req.session.user_id, (value) => {
+    res.status(200);
+  })
+})
+
+itemsRoutes.post("/order", (req, res) => {
+  DataHelpers.updateCurrentOrder(req.session,user_id, "placed", () => {
+    DataHelpers.createNewOrder(req.session.user_id, (value) => {
+    res.status(200);
+   })
+  })
+})
+
+// itemsRoutes.get("/cart/:items_id", (req, res) => {
+
+//   DataHelpers.findCurrentOrder(1, (value) => {
+//     // console.log(value);
+//     let result = value[0].id;
+//     // console.log('result: ', result)
+//     let itemId = req.params.items_id;
+//     // console.log('input: ', itemId);
+//     let quantity = 6; //to be updated
+//     DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
+//       console.log('item_id: ', itemId,'currentOrder: ', result,'quantity: ', quantity);
+//       res.status(200);
+//     }); // insertOrUpdate ends
+//   }); // findCurrentOrder ends
+// });
+
+// Modify database based on users changing quantity
+itemsRoutes.post("/cart/:items_id", (req, res) => {
+
+  DataHelpers.findCurrentOrder(req.session.user_id, (value) => {
+    // console.log(value);
+    let result = value[0].id;
+    // console.log('result: ', result)
+    let itemId = req.params.items_id;
+    // console.log('input: ', itemId);
+    let quantity = req.body.quantity; //to be updated
+    DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
+      console.log('item_id: ', itemId,'currentOrder: ', result,'quantity: ', quantity);
+      res.status(200);
+    }); // insertOrUpdate ends
+  }); // findCurrentOrder ends
+
 
 
 });
@@ -184,11 +238,8 @@ itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
 // Owner submites completed item
 itemsRoutes.post("/restaurants/:restaurants_id/completed", function(req, res) {
 
-
-
-
+        //            }
 });
-
 
 
 // here we get a boolean that shows if the order has been submitted
@@ -199,7 +250,7 @@ itemsRoutes.post("/order", function(req, res) {
 // login and set user cookie
 itemsRoutes.post("/login", function(req, res) {
 
-res.status(200);
+  res.status(200);
 
 
 
@@ -208,11 +259,13 @@ res.status(200);
 // nima testing route
 itemsRoutes.get("/update", function(req, res) {
 
+
     let tempOrderId = 2;
     let tempDeliveryTime = null;
 
 
         DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
+
 
             console.log("data updated!")
             res.status(200);
