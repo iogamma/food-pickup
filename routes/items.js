@@ -10,43 +10,48 @@ itemsRoutes.use(cookieSession({
 module.exports = function(DataHelpers) {
 
 
-// All the GET routes
+// GET Routes
 
-// List of restaurants
-
-itemsRoutes.get("/restaurants", function(req, res) {
-
-  DataHelpers.getAllRestaurants((restaurants) => {
-
-    console.log(restaurants)
-
-
-    res.render("index.ejs",restaurants);
-
-    });
-
-
-  });
-
-// login and set user cookie
-itemsRoutes.get("/login/:id", function(req, res) {
-  //Get userId from query string
-  const usersId = req.params.id;
-  // const templateVars = {
-  //   user: userInDatabase,
-  //   tryMeURL: tryMeURL
-  // };
-  //TODO: Assign a cookie session
-  if (usersId < 3) {
-    req.session.user_id = usersId;
-  }
-
-  res.redirect('/');
+// Home page
+itemsRoutes.get('/', (req, res) => {
+  res.redirect('/restaurants')
 });
 
-itemsRoutes.post('/logout', function(req, res) {
+// List of restaurants page
+itemsRoutes.get("/restaurants", (req, res) => {
+    DataHelpers.getAllRestaurants((restaurants) => {
+      templateVars = {
+        userId      : req.session.user_id,
+        restaurants : restaurants
+      };
+      res.render("index.ejs", templateVars);
+    });
+  });
+
+// login customer and set user cookie
+itemsRoutes.get("/login/:id", (req, res) => {
+  // Get userId from query string
+  const custId = req.params.id;
+  // Assign a cookie session
+  if (custId < 3) {
+    req.session.user_id = custId;
+  }
+  res.redirect('/restaurants');
+});
+
+// login owner and set user cookie
+itemsRoutes.get("/login/o/:id", (req, res) => {
+  // Get userId from query string
+  const restaurantId = req.params.id;
+  // Assign a cookie session
+  req.session.user_id = restaurantId;
+  console.log(req.session.user_id);
+
+  res.redirect('/restaurants');
+});
+
+itemsRoutes.post('/logout', (req, res) => {
   //TODO: Delete a cookie session
-  console.log(req.session === true);
   if (req.session) {
     req.session = null;
   }

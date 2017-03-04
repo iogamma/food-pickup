@@ -1,10 +1,10 @@
 
 .mynav .logo {
   height: 150px;
-  left: 50%;
+/*  left: 50%;*/
   padding: 1em;
-  position: absolute;
-  transform: translateX(-50%);
+/*  position: absolute;
+  transform: translateX(-50%);*/
   width: 150px;
 }
 
