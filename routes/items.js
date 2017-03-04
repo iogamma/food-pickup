@@ -1,6 +1,15 @@
 const express       = require('express');
 const itemsRoutes  = express.Router();
 
+// Twilio Credentials
+var accountSid = 'AC1463a063de7f31831cb44ff36db17c03';
+var authToken = '4743373a9bbe7ad3f30693d77518a3ba';
+
+var twilio = require('twilio');
+var Client = new twilio.RestClient(accountSid, authToken);
+//require the Twilio module and create a REST client
+// var client = new require('twilio').RestClient(accountSid, authToken);
+
 module.exports = function(DataHelpers) {
 
 
@@ -10,7 +19,16 @@ module.exports = function(DataHelpers) {
 
  itemsRoutes.get("/restaurants", function(req, res) {
 
-        res.render("index.ejs");
+  DataHelpers.getAllRestaurants((restaurants) => {
+
+    console.log(restaurants)
+
+
+    res.render("owner.ejs",restaurants);
+
+    });
+
+
   });
 
 
@@ -49,9 +67,19 @@ itemsRoutes.get("/order", function(req, res) {
 
 
 // owner to get the new order
-itemsRoutes.get("/restaurants/1/orders", function(req, res) {
-  res.render("owner.ejs");
-  res.status(200);
+
+itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
+
+    let restaurantId = req.params.restaurants_id;
+
+    DataHelpers.ownerOrders(restaurantId, (orders) => {
+
+    console.log(orders)
+res.send("<html><body>order with status submitted<b>!!!</b></body></html>\n");
+
+    });
+
+
 });
 
 // owner to get the queued orders
@@ -129,9 +157,38 @@ res.status(200);
 
 });
 
+// nima testing route
+itemsRoutes.get("/update", function(req, res) {
 
+    let tempOrderId = 2;
+    let tempDeliveryTime = null;
 
+        DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
 
+            console.log("data updated!")
+            res.status(200);
+
+        });
+
+});
+
+itemsRoutes.get("/twilio", function(req, res) {
+
+Client.messages.create({
+    to: "+16045188905",
+    from: "(604) 239-1549",
+    body: "Twilio works bitches!",
+}, function(err, message) {
+    if (err) {
+        console.error('twilio error', err.message)
+        return;
+    }
+    console.log(message.sid);
+});
+
+res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
+
+});
 
 
 
