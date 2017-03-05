@@ -104,23 +104,30 @@ module.exports = function(DataHelpers) {
   itemsRoutes.get("/order", (req, res) => {
     DataHelpers.retrieveReadyTime(req.session.user_id, (value) => {
       const readyTime = value[0].ready_time;
-      console.log(readyTime);
       res.render("confirmation.ejs")
     });
   });
 
-  itemsRoutes.get("/test", (req, res) => {
+  itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session.user_id, "placed", (value) => {
       DataHelpers.createNewOrder(req.session.user_id, (value) => {
-        DataHelpers.retrieveOrderId(req.session.user_id), (value) => {
-          let orderId = value[0].id;
-          DataHelpers.retrieveOrderItems(orderId), (value) => {
-            let result = value;
-            console.log(result);
+      DataHelpers.retrieveOrderItems(req.session.user_id, (value) => {
+        let urls = stringifyOrder(value);
+        let urlMessage="https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order="+urls;
+        Client.calls.create({
+         url: urlMessage,
+         to: "+17788836554",
+         from: "+17786540355"
+        }, function(err, call) {
+          if (err) {
+          console.error('twilio error', err.message)
+          return;
           }
-        }
-     })
+        console.log(call.sid);
+        });
+      })
     })
+  })
     res.redirect("/order");
   });
 
@@ -217,5 +224,20 @@ module.exports = function(DataHelpers) {
   });
 
   return itemsRoutes;
+
+function stringifyOrder (arr) {
+ let stringOrder = "";
+
+ arr.forEach((obj) => {
+   stringOrder += obj.quantity;
+   stringOrder += "%20"
+   stringOrder += (obj.name + "s");
+   stringOrder += ","
+ });
+   stringOrder = stringOrder.replace(/[’]/g, "");
+   stringOrder = stringOrder.replace(/\s/g, "%20");
+   stringOrder = stringOrder.replace("-", "%20");
+   return stringOrder;
+}
 
 };
