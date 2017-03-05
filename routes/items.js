@@ -1,7 +1,7 @@
 //==================== Constants
 const express       = require('express');
 const cookieSession = require('cookie-session');
-//const groupArray = require('group-array');
+const groupArray = require('group-array');
 const itemsRoutes   = express.Router();
 // Twilio Credentials
 const accountSid = 'AC8fdabc7d09216813636cc2828fbcb42a';
@@ -137,10 +137,31 @@ module.exports = function(DataHelpers) {
     req.session.user_id = restaurantId;
     DataHelpers.ownerOrders(restaurantId, (orders) => {
       let templateVars = {};
+      let groupOrder = groupArray(orders, 'order_id','username','phone_number')
       templateVars = {
-        myOrders : orders,
+        myOrders : groupOrder,
         userId   : restaurantId
       }
+
+      console.log(orders);
+      //console.log(groupOrder);
+    for (obj1 in templateVars.myOrders) {
+      console.log(obj1);
+      for (obj2name in templateVars.myOrders[obj1]){
+        for (arr1Number in templateVars.myOrders[obj1][obj2name]){
+          for (arr2 of templateVars.myOrders[obj1][obj2name][arr1Number]){
+             // console.log(templateVars.myOrders[obj1][obj2name]);
+          }
+        }
+        // console.log(obj2name);
+        // console.log(templateVars.myOrders[obj1][obj2name]);
+      }
+    }
+    //obj1 is orderID
+    //obj2name is name
+    //arr1Number is phone number
+    //arr2.name is item name
+    //arr2.quantity is quantity
       res.render("owner.ejs", templateVars);
       res.status(200);
     });
@@ -191,7 +212,7 @@ module.exports = function(DataHelpers) {
 
   // nima testing route
   itemsRoutes.get("/update", function(req, res) {
-    let tempOrderId = 3;
+    let tempOrderId = 2;
     let tempDeliveryTime = null;
 
     DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
