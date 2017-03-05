@@ -1,7 +1,7 @@
 
 
-<% myOrders.forEach(function(element, index) { %>
-  <% if (myOrders[index].ready_time != null && myOrders[index].status != "completed") { %>
+<% for(index in myOrders){ %>
+  <% if (myOrders[index].ready_time != null) { %>
     <div class="row custOrders">
       <div class="col-md-12">
         <div class= "row orderInfo">
@@ -19,31 +19,36 @@
           </div>
         </div>
         <div class= "row foodItem">
-          <div class= "col-md-10 itemName">
+          <div class= "col-md-3 itemName">
             Item:
+          </div>
+          <div class= "col-md-9 quantity">
             <%= myOrders[index].name %>
           </div>
-          <div class= "col-md-2 quantity">
+        </div>
+        <div class= "row foodQuantity">
+          <div class= "col-md-3 itemName">
             Quantity:
+          </div>
+          <div class= "col-md-9 quantity">
             <%= myOrders[index].quantity %>
           </div>
         </div>
         <div class= "row clearQueue">
-
           <form action="/restaurants/1/completed" method="POST">
             <div class= "text-center col-md-6">
               Pending for pick up....
             </div>
             <div class= "text-center col-md-6">
-              <input type="submit" class="btn btn-primary">Complete Order</button>
-              <input type="hidden" class="form-control" id="order_id" name="order_id" value=<%= myOrders[index].order_id %> />
+              <button type="submit" class="btn btn-primary">Complete Order</button>
+              <input type="hidden" class="form-control" id="order_id" name="order_id" value=<%= index %> />
             </div>
           </form>
         </div>
       </div>
     </div>
   <% } else { %>
-    <div></div>
+
   <% } %>
-<% }); %>
+<% }; %>
 

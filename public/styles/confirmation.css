@@ -1,17 +1,22 @@
+h1 {
+  font-size: 6em;
+}
+
+.pending {
+  color: green;
+  font-size: 15em;
+}
+
+.placed {
+  color: green;
+  font-size: 7em;
+}
 .boxbox {
-  background-color: black;
-  border-radius: 8px;
-  border: solid black;
-  padding: 15%;
-    text-align: center;
+  text-align: center;
 }
 
 .order_ready {
   color: #4286f4;
-  font-size: 3em;
+  font-size: 1.2em;
 }
 
-.time {
-  color: white;
-  font-size: 2em;
-}
