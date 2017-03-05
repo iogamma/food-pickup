@@ -1,17 +1,18 @@
+h1 {
+  font-size: 6em;
+}
+
+.fa-check-circle {
+  color: green;
+  font-size: 15em;
+}
+
 .boxbox {
-  background-color: black;
-  border-radius: 8px;
-  border: solid black;
-  padding: 15%;
-    text-align: center;
+  text-align: center;
 }
 
 .order_ready {
   color: #4286f4;
-  font-size: 3em;
+  font-size: 1.2em;
 }
 
-.time {
-  color: white;
-  font-size: 2em;
-}
