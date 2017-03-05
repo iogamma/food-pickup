@@ -137,26 +137,49 @@ module.exports = function(DataHelpers) {
     req.session.user_id = restaurantId;
     DataHelpers.ownerOrders(restaurantId, (orders) => {
       let templateVars = {};
-      let groupOrder = groupArray(orders, 'order_id','username','phone_number')
+      let groupOrder = groupArray(orders, 'order_id')
+      let groupUser = groupArray(orders, 'username')
+      let groupNumber = groupArray(orders, 'phone_number')
+      let groupTime = groupArray(orders, 'ready_time')
+
       templateVars = {
         myOrders : groupOrder,
+        myUsers : groupUser,
+        myNumbers : groupNumber,
+        theTime : groupTime,
+        theOrder : orders,
         userId   : restaurantId
       }
 
-      console.log(orders);
-      //console.log(groupOrder);
-    for (obj1 in templateVars.myOrders) {
-      console.log(obj1);
-      for (obj2name in templateVars.myOrders[obj1]){
-        for (arr1Number in templateVars.myOrders[obj1][obj2name]){
-          for (arr2 of templateVars.myOrders[obj1][obj2name][arr1Number]){
-             // console.log(templateVars.myOrders[obj1][obj2name]);
-          }
-        }
-        // console.log(obj2name);
-        // console.log(templateVars.myOrders[obj1][obj2name]);
-      }
+for (tim in templateVars.theTime) {
+  console.log(tim)
+}
+
+
+    for (objec in templateVars.myOrders) {
+      console.log(objec)
     }
+
+    for (usr in templateVars.myUsers) {
+      console.log(usr);
+    }
+
+    for (numb in templateVars.myNumbers) {
+      console.log(numb);
+    }
+
+
+
+    //   for (obj2name in templateVars.myOrders[obj1]){
+    //     for (arr1Number in templateVars.myOrders[obj1][obj2name]){
+    //       for (arr2 of templateVars.myOrders[obj1][obj2name][arr1Number]){
+    //           console.log(arr2);
+    //       }
+    //     }
+    //     // console.log(obj2name);
+    //     // console.log(templateVars.myOrders[obj1][obj2name]);
+    //   }
+    // }
     //obj1 is orderID
     //obj2name is name
     //arr1Number is phone number
