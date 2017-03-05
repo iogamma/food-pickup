@@ -144,10 +144,16 @@ module.exports = function(DataHelpers) {
     req.session.user_id = restaurantId;
     DataHelpers.ownerOrders(restaurantId, (orders) => {
       let templateVars = {};
+      let groupMyOrder = GroupQuery(orders);
       templateVars = {
-        myOrders : orders,
+        myOrders : groupMyOrder,
         userId   : restaurantId
       }
+      for(key in templateVars.myOrders){
+        console.log(templateVars.myOrders[key]);
+        console.log(templateVars.myOrders[key].name)
+      }
+
       res.render("owner.ejs", templateVars);
       res.status(200);
     });
@@ -225,6 +231,42 @@ module.exports = function(DataHelpers) {
 
     res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
   });
+
+
+function GroupQuery (arr){
+
+let newObject = {};
+
+   for(eachobject of arr){
+
+     let objectId = eachobject.order_id;
+
+
+     let temp = {
+
+     order_id: eachobject["order_id"],
+     quantity: [eachobject["quantity"]],
+     username: eachobject["username"],
+     phone_number: eachobject["phone_number"],
+     status: eachobject["status"],
+     name: [eachobject["name"]],
+     ready_time: eachobject["ready_time"]
+     };
+
+     if(! newObject[objectId]) {
+
+       newObject[objectId] = temp;
+
+
+     } else {
+         newObject[objectId].name.push(temp.name.toString());
+         newObject[objectId].quantity.push(temp.quantity.toString());
+     }
+
+   }
+   return newObject;
+}
+
 
   return itemsRoutes;
 
