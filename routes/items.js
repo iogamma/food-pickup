@@ -111,11 +111,11 @@ module.exports = function(DataHelpers) {
   });
 
   itemsRoutes.get("/order", (req, res) => {
-    DataHelpers.retrieveTime(req.session,user_id, (value) => {
+    DataHelpers.retrieveReadyTime(req.session.user_id, (value) => {
       const readyTime = value[0].ready_time;
-      res.status(200);
-    })
-  }); 
+      res.render("confirmation.ejs")
+    });
+  });
 
   itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session.user_id, "placed", () => {
@@ -123,10 +123,6 @@ module.exports = function(DataHelpers) {
       res.redirect("/order");
      })
     })
-  });
-
-  itemsRoutes.get("/order", function(req, res) {
-    res.render("confirmation.ejs");
   });
 
   // // Ajax to keep checking the status of the cart and display
