@@ -110,6 +110,13 @@ module.exports = function(DataHelpers) {
     }); // findCurrentOrder ends
   });
 
+  itemsRoutes.get("/order", (req, res) => {
+    DataHelpers.retrieveTime(req.session,user_id, (value) => {
+      const readyTime = value[0].ready_time;
+      res.status(200);
+    })
+  }); 
+
   itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session,user_id, "placed", () => {
       DataHelpers.createNewOrder(req.session.user_id, (value) => {
