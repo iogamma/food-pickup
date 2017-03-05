@@ -130,45 +130,63 @@ module.exports = function(DataHelpers) {
   //   res.render("menu_orders.ejs");
 
   // owner to get the new order
-  itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
+  // itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
+  //   // Get userId from query string
+  //   const restaurantId = req.params.restaurants_id;
+  //   // Assign a cookie session
+  //   req.session.user_id = restaurantId;
+  //   DataHelpers.ownerOrders(restaurantId, (orders) => {
+  //     let templateVars = {};
+  //     let groupOrder = groupArray(orders, 'order_id')
+  //     let groupUser = groupArray(orders, 'username')
+  //     let groupNumber = groupArray(orders, 'phone_number')
+  //     let groupTime = groupArray(orders, 'ready_time')
+
+  //     templateVars = {
+  //       myOrders : groupOrder,
+  //       myUsers : groupUser,
+  //       myNumbers : groupNumber,
+  //       theTime : groupTime,
+  //       theOrder : orders,
+  //       userId   : restaurantId
+  //     }
+  //     for (objec in templateVars.myOrders){
+  //     console.log(templateVars.myOrders[objec]);
+  //   }
+
+
+
+
+      itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
     // Get userId from query string
     const restaurantId = req.params.restaurants_id;
     // Assign a cookie session
     req.session.user_id = restaurantId;
+
+
+
+
     DataHelpers.ownerOrders(restaurantId, (orders) => {
-      let templateVars = {};
-      let groupOrder = groupArray(orders, 'order_id')
-      let groupUser = groupArray(orders, 'username')
-      let groupNumber = groupArray(orders, 'phone_number')
-      let groupTime = groupArray(orders, 'ready_time')
-
-      templateVars = {
-        myOrders : groupOrder,
-        myUsers : groupUser,
-        myNumbers : groupNumber,
-        theTime : groupTime,
-        theOrder : orders,
-        userId   : restaurantId
-      }
-
-      console.log(orders);
-
-for (tim in templateVars.theTime) {
-  console.log(tim)
-}
 
 
-    for (objec in templateVars.myOrders) {
-      console.log(objec)
-    }
 
-    for (usr in templateVars.myUsers) {
-      console.log(usr);
-    }
+      // console.log(GroupQuery(orders));
+// for (tim in templateVars.theTime) {
+//   console.log(tim)
+// }
 
-    for (numb in templateVars.myNumbers) {
-      console.log(numb);
-    }
+
+//     for (objec in templateVars.myOrders) {
+//       console.log(objec)
+//     }
+
+//     for (usr in templateVars.myUsers) {
+//       console.log(usr);
+//     }
+
+//     for (numb in templateVars.myNumbers) {
+//       console.log(numb);
+//     }
 
 
 
@@ -187,7 +205,7 @@ for (tim in templateVars.theTime) {
     //arr1Number is phone number
     //arr2.name is item name
     //arr2.quantity is quantity
-      res.render("owner.ejs", templateVars);
+      res.render("owner.ejs", GroupQuery(orders, restaurantId));
       res.status(200);
     });
   });
@@ -265,6 +283,32 @@ for (tim in templateVars.theTime) {
     res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
   });
 
+
+    function GroupQuery (restaurantID, arr){
+      let newObject = {};
+        for(eachobject of arr){
+          let objectId = eachobject.order_id;
+          let temp = {
+            order_id: eachobject["order_id"],
+            quantity: [eachobject["quantity"]],
+            username: eachobject["username"],
+            phone_number: eachobject["phone_number"],
+            status: eachobject["status"],
+            name: [eachobject["name"]],
+            ready_time: eachobject["ready_time"],
+            userId: restaurantID
+          };
+          if(! newObject[objectId]) {
+            newObject[objectId] = temp;
+          } else {
+            newObject[objectId].name.push(temp.name.toString());
+            newObject[objectId].quantity.push(temp.quantity.toString());
+          }
+        }
+        return newObject;
+      }
+
   return itemsRoutes;
+
 
 };

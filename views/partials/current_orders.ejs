@@ -1,19 +1,15 @@
-
+  <% for (objec in myOrders) { %>
     <div class="row custOrders">
       <div class="col-md-12">
         <div class= "row orderInfo">
-          <% for (objec in myOrders) { %>
             <div class= "col-md-3 orderId">
               Order ID:
               <%= objec %>
             </div>
-          <% } %>
-          <% for (usr in myUsers) { %>
             <div class= "col-md-4 custName">
               Customer name:
-              <%= usr %>
+              <%= myOrders %>
             </div>
-          <% } %>
           <% for (numb in myNumbers) { %>
             <div class= "col-md-5 phoneNumber">
               Phone Number:
@@ -53,3 +49,4 @@
         </div>
       </div>
     </div>
+    <% } %>
