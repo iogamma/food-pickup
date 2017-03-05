@@ -151,6 +151,8 @@ module.exports = function(DataHelpers) {
         userId   : restaurantId
       }
 
+      console.log(orders);
+
 for (tim in templateVars.theTime) {
   console.log(tim)
 }
