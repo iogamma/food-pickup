@@ -33,7 +33,8 @@ module.exports = function(DataHelpers) {
         userId      : req.session.user_id,
         restaurants : restaurants
       };
-      res.render("index.ejs",restaurants);
+
+      res.render("index.ejs",templateVars);
     });
   });
 
@@ -45,6 +46,8 @@ module.exports = function(DataHelpers) {
     if (custId < 3) {
       req.session.user_id = custId;
     }
+    DataHelpers.insertNewOrder(req.session.user_id, (value) => {
+    });
     res.redirect('/restaurants');
   });
 
@@ -72,46 +75,23 @@ module.exports = function(DataHelpers) {
   });
 
   //   // user gets updates on the delivery time
-  // itemsRoutes.get("/order", function(req, res) {
-  //   res.render("confirmation.ejs");
-  //   res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
-
-  //   res.status(200);
-  // });
 
   // // Ajax to keep checking the status of the cart and display
-  // itemsRoutes.get("/cart", function(req, res) {
-  //   res.render("menu_orders.ejs");
-  // });
 
-  //   itemsRoutes.get("/cart", (req, res) => {
-  //   DataHelpers.retrieveData(1, (value) => {
-  //     console.log(value);
-  //     res.status(200);
-  //   })
-  // })
+  itemsRoutes.get("/cart", (req, res) => {
+      DataHelpers.retrieveId(req.session.user_id, (value) => {
+        const orderId = value[0].id;
+        DataHelpers.retrieveData(orderId, (value) => {
+          res.json(value);
+        })    
+      })
+  })
 
   // itemsRoutes.get("/login", (req, res) => {
   //   DataHelpers.insertNewOrder(req.session.user_id, (value) => {
   //     res.status(200);
   //   })
   // })
-
-  // itemsRoutes.get("/cart/:items_id", (req, res) => {
-
-//   DataHelpers.findCurrentOrder(1, (value) => {
-//     // console.log(value);
-//     let result = value[0].id;
-//     // console.log('result: ', result)
-//     let itemId = req.params.items_id;
-//     // console.log('input: ', itemId);
-//     let quantity = 6; //to be updated
-//     DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
-//       console.log('item_id: ', itemId,'currentOrder: ', result,'quantity: ', quantity);
-//       res.status(200);
-//     }); // insertOrUpdate ends
-//   }); // findCurrentOrder ends
-// });
 
   // Modify database based on users changing quantity
   itemsRoutes.post("/cart/:items_id", (req, res) => {
@@ -133,10 +113,30 @@ module.exports = function(DataHelpers) {
   itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session,user_id, "placed", () => {
       DataHelpers.createNewOrder(req.session.user_id, (value) => {
-      res.status(200);
+      res.redirect("/order");
      })
     })
   });
+
+  // itemsRoutes.get("/order", function(req, res) {
+  //   res.render("confirmation.ejs");
+  //   res.send("<html><body>wait here to get delivary status<b>!!!</b></body></html>\n");
+
+  //   res.status(200);
+  // });
+
+  // // Ajax to keep checking the status of the cart and display
+  // itemsRoutes.get("/cart", function(req, res) {
+  //   res.render("menu_orders.ejs");
+  // });
+
+
+
+
+
+
+
+
 
 
 
@@ -183,6 +183,7 @@ module.exports = function(DataHelpers) {
       }
       console.log(templateVars)
       res.render("owner.ejs", templateVars);
+
       res.status(200);
     });
   });
