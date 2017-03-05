@@ -1,14 +1,24 @@
-$(document).ready(function(){
+$(document).ready(function() {
+  $qtyInput = $('.qty_input');
+
+  // Change the data attribute after quantity change
+  $qtyInput.on('change', function() {
+    var newQty = $(this).val();
+    $(this).data('qty', newQty);
+  })
+
   // Send AJAX call to server to update item's quantity
-  $('.qty_input').on('blur', function(event) {
+  $qtyInput.on('blur', function(event) {
     event.preventDefault();
     //Find the item's ID
+    var $thisQtyInput = $(this);
     var itemId = $(this).closest(".items_id").data("item_id");
-
-    //TODO: Ajax POST to server for that item with the input value
+    var currentQty = $thisQtyInput.data('qty');
+     //TODO: Ajax POST to server for that item with the input value
     $.ajax({
-      method: 'POST',
-      url: '/cart/' + itemId
+      data   : {qty: currentQty},
+      method : 'POST',
+      url    : '/cart/' + itemId
     }).then( function() {
       // Optional HTML confirmation to user
     }).fail( function() {
@@ -19,27 +29,24 @@ $(document).ready(function(){
   $('.plus_item').on('click', function(event) {
     event.preventDefault();
     //TODO: grab the quantity inside the data attribute
-    var currentQty = $(this).parent("div")
-                            .siblings(".qty_value")
-                            .find(".qty_input")
-                            .data("qty");
+    var $thisQtyInput = $(this).parent("div")
+                                .siblings(".qty_value")
+                                .find(".qty_input");
+    var currentQty = $thisQtyInput.data("qty");
+    var itemId = $(this).closest(".items_id").data("item_id");
+
     //TODO: AJAX POST to server the value of the data attribute
     $.ajax({
-      method: 'POST',
-      url: '/cart/' + (currentQty + 1).toString();
-    }).then( function() {
+      data   : {qty: (currentQty + 1)},
+      method : 'POST',
+      url    : '/cart/' + itemId
+    }).then(function() {
       // add 1 to quantity inside data attribute
       currentQty += 1;
       // update new quantity for value
-      $(this).parent("div")
-             .siblings(".qty_value")
-             .find(".qty_input")
-             .attr("value", currentQty);
-      $(this).parent("div")
-             .siblings(".qty_value")
-             .find(".qty_input")
-             .data("qty", currentQty);
-    }).fail( function() {
+      $thisQtyInput.attr("value", currentQty);
+      $thisQtyInput.data("qty", currentQty);
+    }).fail(function() {
       alert("Sorry, were unable to add 1 to your quantity! Please contact suppport.");
     });
   });
@@ -47,28 +54,25 @@ $(document).ready(function(){
   $('.minus_item').on('click', function(event) {
     event.preventDefault();
     //TODO: grab the quantity inside the data attribute
-    var currentQty = $(this).parent("div")
-                            .siblings(".qty_value")
-                            .find(".qty_input")
-                            .data("qty");
-    //TODO: AJAX POST to server to decrement quantity for that item.
-        $.ajax({
-      method: 'POST',
-      url: '/cart/' + (currentQty - 1).toString();
-    }).then( function() {
+    var $thisQtyInput = $(this).parent("div")
+                                .siblings(".qty_value")
+                                .find(".qty_input");
+    var currentQty = $thisQtyInput.data("qty");
+    var itemId = $(this).closest(".items_id").data("item_id");
+
+    //TODO: AJAX POST to server the value of the data attribute
+    $.ajax({
+      data   : {qty: (currentQty - 1)},
+      method : 'POST',
+      url    : '/cart/' + itemId
+    }).then(function() {
       // add 1 to quantity inside data attribute
-      currentQty += 1;
+      currentQty -= 1;
       // update new quantity for value
-      $(this).parent("div")
-             .siblings(".qty_value")
-             .find(".qty_input")
-             .attr("value", currentQty);
-      $(this).parent("div")
-             .siblings(".qty_value")
-             .find(".qty_input")
-             .data("qty", currentQty);
-    }).fail( function() {
-      alert("Sorry, were unable to add 1 to your quantity! Please contact suppport.");
+      $thisQtyInput.attr("value", currentQty);
+      $thisQtyInput.data("qty", currentQty);
+    }).fail(function() {
+      alert("Sorry, were unable to subtract 1 to your quantity! Please contact suppport.");
     });
   });
 });
