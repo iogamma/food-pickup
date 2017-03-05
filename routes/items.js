@@ -64,7 +64,7 @@ module.exports = function(DataHelpers) {
     const restaurantId = req.params.id;
     DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       const orderId = value[0].id;
-      DataHelpers.retrieveAllData(restaurantId, orderId, (menuItems) => {
+      DataHelpers.retrieveMenuData(restaurantId, orderId, (menuItems) => {
         const templateVars = {
           userId        : req.session.user_id,
           restaurantId  : restaurantId,
@@ -82,53 +82,49 @@ module.exports = function(DataHelpers) {
   itemsRoutes.get("/cart", (req, res) => {
     DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       const orderId = value[0].id;
-      DataHelpers.retrieveData(orderId, (value) => {
+      DataHelpers.retrieveSummaryData(orderId, (value) => {
         res.json(value);
       });
     });
   });
 
-  // itemsRoutes.get("/login", (req, res) => {
-  //   DataHelpers.insertNewOrder(req.session.user_id, (value) => {
-  //     res.status(200);
-  //   })
-  // })
-
   // Modify database based on users changing quantity
   itemsRoutes.post("/cart/:items_id", (req, res) => {
-    DataHelpers.findCurrentOrder(req.session.user_id, (value) => {
-      // console.log(value);
+    DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       let result = value[0].id;
-      // console.log('result: ', result)
       let itemId = req.params.items_id;
-      // console.log('input: ', itemId);
       let quantity = Number(req.body.qty); //to be updated
 
-      DataHelpers.insertOrUpdate(itemId, result, quantity, (data)  =>{
+      DataHelpers.insertOrUpdate(itemId, result, quantity, (value)  =>{
         res.status(200).send();
       }); // insertOrUpdate ends
-    }); // findCurrentOrder ends
+    }); // retrieveOrderId ends
   });
 
   itemsRoutes.get("/order", (req, res) => {
     DataHelpers.retrieveReadyTime(req.session.user_id, (value) => {
       const readyTime = value[0].ready_time;
+      console.log(readyTime);
       res.render("confirmation.ejs")
     });
   });
 
-  itemsRoutes.post("/order", (req, res) => {
+  itemsRoutes.get("/test", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session.user_id, "placed", (value) => {
-      console.log("output: ", value);
       DataHelpers.createNewOrder(req.session.user_id, (value) => {
-      res.redirect("/order");
+        DataHelpers.retrieveOrderId(req.session.user_id), (value) => {
+          let orderId = value[0].id;
+          DataHelpers.retrieveOrderItems(orderId), (value) => {
+            let result = value;
+            console.log(result);
+          }
+        }
      })
     })
+    res.redirect("/order");
   });
 
   // // Ajax to keep checking the status of the cart and display
-  // itemsRoutes.get("/cart", function(req, res) {
-  //   res.render("menu_orders.ejs");
 
   // owner to get the new order
   itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
