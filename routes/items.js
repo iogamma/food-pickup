@@ -83,7 +83,7 @@ module.exports = function(DataHelpers) {
         const orderId = value[0].id;
         DataHelpers.retrieveData(orderId, (value) => {
           res.json(value);
-        })    
+        })
       })
   })
 
@@ -128,46 +128,6 @@ module.exports = function(DataHelpers) {
   // // Ajax to keep checking the status of the cart and display
   // itemsRoutes.get("/cart", function(req, res) {
   //   res.render("menu_orders.ejs");
-  // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//=======LINE170/////////////////////////////////////////////////////////////////////
 
   // owner to get the new order
   itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
@@ -181,9 +141,7 @@ module.exports = function(DataHelpers) {
         myOrders : orders,
         userId   : restaurantId
       }
-      console.log(templateVars)
       res.render("owner.ejs", templateVars);
-
       res.status(200);
     });
   });
@@ -191,25 +149,49 @@ module.exports = function(DataHelpers) {
   // Owner submites delivary time
   itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
 
-    let tempOrderId = 2;
-    let tempDeliveryTime = null;
+
+  console.log(req.body.order_id);
+  console.log(req.body.ready_time);
+
+
+
+    let tempOrderId = req.body.order_id;
+    let tempDeliveryTime = req.body.ready_time;
+
+    Client.messages.create({
+      to: "+17788836554",
+      from: "+17786540355",
+      body: tempDeliveryTime,
+      }, function(err, message) {
+        if (err) {
+          console.error('twilio error', err.message)
+          return;
+        }
+        console.log(message.sid);
+      });
 
     DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
-
       console.log("data updated!")
       res.status(200);
+      res.redirect("/restaurants/1/orders");
     });
   });
 
   // Owner submites completed item
   itemsRoutes.post("/restaurants/:restaurants_id/completed", function(req, res) {
 
-          //            }
+    let tempOrderId = req.body.order_id;
+
+    DataHelpers.updateCompleted(tempOrderId,(updates) => {
+      console.log("data updated!")
+      res.status(200);
+      res.redirect("/restaurants/1/orders");
+    });
   });
 
   // nima testing route
   itemsRoutes.get("/update", function(req, res) {
-    let tempOrderId = 2;
+    let tempOrderId = 3;
     let tempDeliveryTime = null;
 
     DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
@@ -237,7 +219,6 @@ module.exports = function(DataHelpers) {
     res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
   });
 
-
-
   return itemsRoutes;
+
 };

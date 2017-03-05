@@ -34,7 +34,7 @@
           <div class= "text-center col-md-6">
             Please inform customer of order pick up time:
           </div>
-          <form action="/login" method="POST">
+          <form action="/restaurants/1/pickup" method="POST">
             <div class= "text-right col-md-3">
               <input type="number" class="form-control" id="ready_time" name="ready_time" placeholder="minutes"/>
               <input type="hidden" class="form-control" id="order_id" name="order_id" value=<%= myOrders[index].order_id %> />
