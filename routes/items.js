@@ -118,7 +118,8 @@ module.exports = function(DataHelpers) {
   });
 
   itemsRoutes.post("/order", (req, res) => {
-    DataHelpers.updateCurrentOrder(req.session.user_id, "placed", () => {
+    DataHelpers.updateCurrentOrder(req.session.user_id, "placed", (value) => {
+      console.log("output: ", value);
       DataHelpers.createNewOrder(req.session.user_id, (value) => {
       res.redirect("/order");
      })
