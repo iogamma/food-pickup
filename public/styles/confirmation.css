@@ -2,11 +2,15 @@ h1 {
   font-size: 6em;
 }
 
-.fa-check-circle {
+.pending {
   color: green;
   font-size: 15em;
 }
 
+.placed {
+  color: green;
+  font-size: 7em;
+}
 .boxbox {
   text-align: center;
 }

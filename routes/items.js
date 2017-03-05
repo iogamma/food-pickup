@@ -112,8 +112,14 @@ module.exports = function(DataHelpers) {
 
   itemsRoutes.get("/order", (req, res) => {
     DataHelpers.retrieveReadyTime(req.session.user_id, (value) => {
-      const readyTime = value[0].ready_time;
-      res.render("confirmation.ejs")
+      let templateVars = {};
+      templateVars = { myValue : value }
+      //const readyTime = value[0].ready_time;
+      console.log(templateVars.myValue);
+      // for (key in templateVars.myValue){
+      //   console.log(templateVars.myValue[key].ready_time);
+      // }
+      res.render("confirmation.ejs", templateVars)
     });
   });
 
