@@ -62,18 +62,28 @@ module.exports = function(DataHelpers) {
   // Load the menu of the chosen restaurant
   itemsRoutes.get("/restaurants/:id", (req, res) => {
     const restaurantId = req.params.id;
-    DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
-      const orderId = value[0].id;
-      DataHelpers.retrieveMenuData(restaurantId, orderId, (menuItems) => {
-        const templateVars = {
-          userId        : req.session.user_id,
-          restaurantId  : restaurantId,
-          menuItems     : menuItems
-        };
-        console.log(templateVars.menuItems);
-        res.render("menu_orders.ejs", templateVars);
+    console.log("outside if condition")
+    console.log(!req.session.restaurant_id)
+    // if (!req.session.restaurant_id){
+      req.session.restaurant_id = restaurantId;
+      console.log(req.session.restaurant_id)
+      DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
+        const orderId = value[0].id;
+        DataHelpers.retrieveMenuData(restaurantId, orderId, (menuItems) => {
+          const templateVars = {
+            userId        : req.session.user_id,
+            restaurantId  : restaurantId,
+            menuItems     : menuItems
+          };
+          console.log(templateVars.menuItems);
+          res.render("menu_orders.ejs", templateVars);
+        });
       });
-    });
+    // } else{
+    //   console.log("before redirect")
+
+    //   res.redirect('/restaurants/'+req.session.restaurant_id);
+    // }
   });
   //   // user gets updates on the delivery time
 
@@ -111,21 +121,22 @@ module.exports = function(DataHelpers) {
   itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session.user_id, "placed", (value) => {
       DataHelpers.createNewOrder(req.session.user_id, (value) => {
-      DataHelpers.retrieveOrderItems(req.session.user_id, (value) => {
-        let urls = stringifyOrder(value);
-        let urlMessage="https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order="+urls;
-        Client.calls.create({
-         url: urlMessage,
-         to: "+17788836554",
-         from: "+17786540355"
-        }, function(err, call) {
-          if (err) {
-          console.error('twilio error', err.message)
-          return;
-          }
-        console.log(call.sid);
-        });
-      })
+        DataHelpers.retrieveOrderItems(req.session.user_id, (value) => {
+          console.log(value);
+          // let urls = stringifyOrder(value);
+          // let urlMessage="https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order="+urls;
+          // Client.calls.create({
+          //  url: urlMessage,
+          //  to: "+17788836554",
+          //  from: "+17786540355"
+          // }, function(err, call) {
+          //   if (err) {
+          //   console.error('twilio error', err.message)
+          //   return;
+          //   }
+          // console.log(call.sid);
+          // });
+        })
     })
   })
     res.redirect("/order");
@@ -138,7 +149,7 @@ module.exports = function(DataHelpers) {
     // Get userId from query string
     const restaurantId = req.params.restaurants_id;
     // Assign a cookie session
-    req.session.user_id = restaurantId;
+    // req.session.user_id = restaurantId;
     DataHelpers.ownerOrders(restaurantId, (orders) => {
       let templateVars = {};
       templateVars = {
