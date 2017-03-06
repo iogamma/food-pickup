@@ -2,6 +2,14 @@ body {
 
 }
 
+img {
+  border-radius: 20px;
+}
+
+.food {
+  opacity:0.8;
+}
+
 .main {
   position: relative;
   padding-top: 12em;
