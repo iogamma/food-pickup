@@ -25,7 +25,7 @@ exports.seed = function(knex, Promise) {
                 knex('items').insert({description: 'This is a cookie', image: '/images/chocolate.jpg', name: 'Chocolate Chips Cookie', price: '3.50', restaurant_id:ids[0]}),
                 knex('items').insert({description: 'This is another cookie', image: '/images/butter.jpg', name: 'Peanut Butter Cookie', price: '2.50', restaurant_id:ids[0]}),
               ]);
-            });
+            })
           ])
       });
     }).then(() => {})
