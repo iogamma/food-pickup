@@ -116,18 +116,18 @@ module.exports = function(DataHelpers) {
       DataHelpers.insertNewOrder(req.session.user_id, (value) => {
         DataHelpers.retrieveOrderItems(req.session.user_id, (value) => {
           console.log("data: ", value)
-          const urls = util.stringifyOrder(value);
-          const urlMessage = "https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order=" + urls;
-          Client.calls.create({
-           url: urlMessage,
-           to: "+17788913326",  // owner's number
-           from: "+17786540355"
-          }, function(err, call) {
-            if (err) {
-            console.error('twilio error', err.message)
-            return;
-            }
-          });
+          // const urls = util.stringifyOrder(value);
+          // const urlMessage = "https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order=" + urls;
+          // Client.calls.create({
+          //  url: urlMessage,
+          //  to: "+17788913326",  // owner's number
+          //  from: "+17786540355"
+          // }, function(err, call) {
+          //   if (err) {
+          //   console.error('twilio error', err.message)
+          //   return;
+          //   }
+          // });
         })
       res.redirect("/order");
       });
