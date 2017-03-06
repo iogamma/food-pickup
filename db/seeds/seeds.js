@@ -19,7 +19,7 @@ exports.seed = function(knex, Promise) {
                 knex('items').insert({description: 'This is another salad', image: '/images/caesar.jpg', name: 'Caesar Salad', price: '5.00', restaurant_id:ids[0]})
               ])
             }),
-            knex('restaurants').insert({username: 'Tom', password:'test', location: '222 W Hastings St #300, Vancouver, BC', phone_number: '604-333-3333', name:"Cookie by Lighthouse"})
+            knex('restaurants').insert({username: 'Tom', password:'test', location: '222 W Hastings St #300, Vancouver, BC', phone_number: '604-333-3333', name:"Cookies by Lighthouse"})
             .returning('id').then(function(ids) {
               return Promise.all([
                 knex('items').insert({description: 'This is a cookie', image: '/images/chocolate.jpg', name: 'Chocolate Chips Cookie', price: '3.50', restaurant_id:ids[0]}),
