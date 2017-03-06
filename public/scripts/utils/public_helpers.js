@@ -25,8 +25,8 @@ function prettyPrice(price) {
 function updateCart(restaurantId) {
   // make an ajax call for cart information and update cart
   $.ajax({
-    method : 'GET',
-    url    : '/cart/' + restaurantId
+    method : "GET",
+    url    : "/cart/" + restaurantId
   }).then( function(data) {
     var totals = calOrderTotals(data);
 
@@ -36,12 +36,12 @@ function updateCart(restaurantId) {
         var itemTotal = parseFloat(Math.round((item.quantity * item.price) * 100) / 100).toFixed(2);
         var $itemRow = $("<div>", { class: "row" });
         var $itemColName = $("<div>", { class: item.id + " col-md-7"});
-        var $itemColQty = $("<div>", { class: "itemQty col-md-1"});
-        var $itemColTotal = $("<div>", { class: "itemTotal col-md-1"});
+        var $itemColQty = $("<div>", { class: "itemQty col-md-2"});
+        var $itemColTotal = $("<div>", { class: "itemTotal col-md-3"});
 
         $itemColName.text(item.name);
         $itemColQty.text(item.quantity);
-        $itemColTotal.text(itemTotal);
+        $itemColTotal.text("$" + itemTotal);
 
         $(".chosen_items").append($itemRow);
         $($itemRow).append($itemColName, $itemColQty, $itemColTotal)

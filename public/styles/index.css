@@ -1,20 +1,31 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+body {
+  background-color: rgba(128, 0, 0, 1);
+}
 
-.item {
-  border-radius: 20px;
-  height:80%;
-  width:100%;
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  width: 70em;
+  height: 35em;
+  margin: auto;
 }
 
 .main {
   position: relative;
-  padding-top: 12em;
+  padding-top: 7em;
 }
 
 #myCarousel {
-  padding-top: 15%;
+  background-color: rgba(128, 0, 0, 1);
+  padding-top: 10%;
 }
 
 .theColor {
   color: white
 }
+

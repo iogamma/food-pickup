@@ -1,18 +1,15 @@
 
 .mynav .logo {
-  height: 150px;
-/*  left: 50%;*/
+  height: 100px;
   padding: 1em;
-/*  position: absolute;
-  transform: translateX(-50%);*/
-  width: 150px;
+  width: 100px;
 }
 
 .mynav {
-  background: #ffd7d7;
+  background-color: white;
+  border-top: solid 5px;
+  border-bottom: solid 10px;
   left: 0;
-  min-height: 150px;
-  overflow: auto;
   position: fixed;
   right: 0;
   z-index: 999;

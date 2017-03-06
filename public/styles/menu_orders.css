@@ -1,16 +1,66 @@
-.qty_input {
-  height: 100% ;
-  width: 100%;
-}
-
-.item .image {
-  height: 100% ;
-  width: 100%;
+.btn-order {
+  color: black;
 }
 
 .cart {
-  background: lightgrey;
-  margin: 2em 0 2em 0 ;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2em;
+  color: white;
+  font-size: 12px;
+  margin: 6.5em 0 0;
+  overflow: auto;
+  padding: 1em;
   position: fixed;
+  width: 21em;
   z-index: 9999;
+}
+
+.cart_icon {
+  width: 4em;
+}
+
+.header {
+  color: white;
+}
+
+.item .image {
+  border: solid 1px;
+  border-radius: 2em;
+  height: 100%;
+  width: 100%;
+}
+
+.icon {
+  padding: 0 0 1em;
+}
+
+.menu_header {
+  padding: 1em 0 0;
+}
+
+.order {
+  color: black;
+  padding: 1em 0 0;
+}
+
+.qty_input {
+  height: 2em;
+  text-align: center;
+  width: 100%;
+}
+
+.row .item {
+  background-color: white;
+  border-radius: 2em;
+  margin: 0 0 2em;
+  padding: 1em 0;
+}
+
+.row .qty {
+  padding: 1em 0 0 0;
+}
+
+.row .totals {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-top: solid 1px;
 }
