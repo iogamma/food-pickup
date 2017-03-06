@@ -38,36 +38,42 @@
   </nav>
   <div class="main container-fluid">
     <div class="row">
-      <div class="col-md-4"></div>
-      <div class="restaurant_menu col-md-4" data-restaurant_id=<%= restaurantId %>>
+      <div class="col-md-2"></div>
+
+      <div class="restaurant_menu col-md-5" data-restaurant_id=<%= restaurantId %>>
+        <div class="row">
+          <div class="col-md-12 header text-center">
+            <h1 class="menu_header">Menu<h1>
+          </div>
+        </div>
         <% menuItems.forEach( function(item) {
           // Set quantity to 0 if user hasn't set the quantity.
           !item.quantity ? item.quantity = 0 : null;
         %>
-        <div class="items_id row" data-item_id=<%= item.id %>>
-          <div class="item col-md-12">
+        <div class="row item items_id" data-item_id=<%= item.id %>>
+          <div class="col-md-12">
             <div class="row">
               <div class="col-md-12"><img class="image" src="<%=item.image%>"></div>
             </div>
             <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6 text-center"><%=item.name%> - <%=item.price%></div>
-              <div class="col-md-3"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-8 text-center"><h3><%=item.name%> - <%=item.price%></h3></div>
+              <div class="col-md-2"></div>
             </div>
             <div class="row">
               <div class="col-md-2"></div>
               <div class="col-md-8 text-center"><%=item.description%></div>
               <div class="col-md-2"></div>
             </div>
-            <div class="qty row">
+            <div class="row qty">
               <div class="col-md-3"></div>
-              <div class="col-md-2"><button class="minus_item btn btn-danger center-block">-</button></div>
+              <div class="col-md-2"><button class="minus_item btn btn-danger center-block"><i class="glyphicon glyphicon-minus-sign"></i></button></div>
               <div class="qty_value col-md-2">
                 <form class="center-block">
-                  <input type="number" step="1" class="qty_input" value=<%=item.quantity%>>
+                  <input type="number" step="1" class="qty_input" min="0" value=<%=item.quantity%>>
                 </form>
               </div>
-              <div class="col-md-2"><button class="plus_item btn btn-success center-block">+</button></div>
+              <div class="col-md-2"><button class="plus_item btn btn-success center-block"><i class="glyphicon glyphicon-plus-sign"></i></button></div>
               <div class="col-md-3"></div>
             </div>
           </div>
@@ -75,13 +81,13 @@
         <% }); %>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-5">
 
-        <div class="cart row">
-          <div class="col-md-12">
+        <div class="row">
+          <div class="cart col-md-6">
             <div class="row">
-              <div class="col-md-8 text-center">
-                ICON
+              <div class="icon col-md-12 text-center">
+                <img class="cart_icon" src="/images/cart.png">
               </div>
             </div>
 
@@ -95,10 +101,10 @@
                       <div class="<%= item.id %> col-md-7">
                         <%= item.name %>
                       </div>
-                      <div class="itemQty col-md-1">
+                      <div class="itemQty col-md-2">
                         x<%= item.quantity %>
                       </div>
-                      <div class="itemTotal col-md-1">
+                      <div class="itemTotal col-md-3">
                         $<%= parseFloat(Math.round((item.quantity * item.price) * 100) / 100).toFixed(2);%>
                       </div>
                     </div>
@@ -107,47 +113,51 @@
               </div>
             </div>
 
-          <div class="row">
+          <div class="row totals">
             <div class="col-md-12">
               <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-5"></div>
+                <div class="col-md-4">
                   Subtotal:
                 </div>
-                <div class="subtotal col-md-2">
+                <div class="subtotal col-md-3">
                   $<%=parseFloat(Math.round(totals.subtotal * 100) / 100).toFixed(2);%>
                 </div>
               </div>
-               <div class="row">
-                <div class="col-md-10">
-                  GST - 5%:
+              <div class="row">
+                <div class="col-md-5"></div>
+                <div class="col-md-4 text-center">
+                  GST (5%):
                 </div>
-                <div class="gst col-md-2">
+                <div class="gst col-md-3">
                   $<%=parseFloat(Math.round(totals.gst * 100) / 100).toFixed(2);%>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-10">
-                  PST - 7%:
+                <div class="col-md-5"></div>
+                <div class="col-md-4">
+                  PST (7%):
                 </div>
-                <div class="pst col-md-2">
+                <div class="pst col-md-3">
                   $<%=parseFloat(Math.round(totals.pst * 100) / 100).toFixed(2);%>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-10">
+              <div class="col-md-5"></div>
+                <div class="col-md-4">
                   Total:
                 </div>
-                <div class="total col-md-2">
+                <div class="total col-md-3">
                   $<%=parseFloat(Math.round(totals.total * 100) / 100).toFixed(2);%>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row">
+          <div class="row pull-right"">
             <div class="col-md-12">
-              <form method="POST" action="/order">
-                <input type="submit">Order</input>
+              <form class="order" method="POST" action="/order">
+                <button class="btn-order" type="submit"><i class="glyphicon glyphicon-cutlery"></i> ORDER</button>
               </form>
             </div>
           </div>
