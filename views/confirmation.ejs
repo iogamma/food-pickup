@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="refresh" content="60">
 
-    <title>Lighthouse Cafe</title>
+    <title>Confirmation</title>
 
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" type="text/css">
@@ -33,7 +33,7 @@
   </head>
 <body>
   <% myValue.forEach(function(element, index) { %>
-    <%if (myValue[index].ready_time != null) { %>
+    <% if (myValue[index].ready_time != null) { %>
       <div class="main container-fluid">
         <div class="top row">
           <div class="center col-md-12">
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <% } else { %>
+    <% } else { %>
       <div class="main container-fluid">
         <div class="top row">
           <div class="center col-md-12">

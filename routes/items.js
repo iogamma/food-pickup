@@ -66,15 +66,7 @@ module.exports = function(DataHelpers) {
 
     DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       const orderId = value[0].id;
-      DataHelpers.retrieveAllData(restaurantId, orderId, (order) => {
-        // //Calculate the totals for an order
-        // menuItems.forEach((item) => {
-        //   itemTotal = Number(item.quantity) * item.price;
-        //   totals.subtotal += itemTotal;
-        // })
-        // totals.gst = totals.subtotal * 0.05;
-        // totals.pst = totals.subtotal * 0.07;
-        // totals.total = totals.subtotal + totals.gst + totals.pst;
+      DataHelpers.retrieveMenuData(restaurantId, orderId, (order) => {
         const totals = util.calOrderTotals(order);
         const templateVars = {
           userId        : req.session.user_id,
@@ -84,11 +76,7 @@ module.exports = function(DataHelpers) {
         };
         res.render("menu_orders.ejs", templateVars);
       });
-    // } else{
-    //   console.log("before redirect")
-
-    //   res.redirect('/restaurants/'+req.session.restaurant_id);
-    // }
+    });
   });
   //   // user gets updates on the delivery time
 
@@ -120,10 +108,10 @@ module.exports = function(DataHelpers) {
 
   itemsRoutes.get("/order", (req, res) => {
     DataHelpers.retrieveReadyTime(req.session.user_id, (value) => {
+      console.log(value);
       let templateVars = {};
       templateVars = { myValue : value }
       //const readyTime = value[0].ready_time;
-      console.log(templateVars.myValue);
       // for (key in templateVars.myValue){
       //   console.log(templateVars.myValue[key].ready_time);
       // }
@@ -133,9 +121,9 @@ module.exports = function(DataHelpers) {
 
   itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session.user_id, "placed", (value) => {
-      DataHelpers.createNewOrder(req.session.user_id, (value) => {
+      // DataHelpers.createNewOrder(req.session.user_id, (value) => {
         DataHelpers.retrieveOrderItems(req.session.user_id, (value) => {
-          console.log(value);
+          console.log("here");
           // let urls = stringifyOrder(value);
           // let urlMessage="https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order="+urls;
           // Client.calls.create({
@@ -149,10 +137,10 @@ module.exports = function(DataHelpers) {
           //   }
           // console.log(call.sid);
           // });
-        })
-    })
-  })
-    res.redirect("/order");
+          res.redirect("/order");
+        });
+    // })
+    });
   });
 
   // // Ajax to keep checking the status of the cart and display
@@ -182,27 +170,20 @@ module.exports = function(DataHelpers) {
 
   // Owner submites delivary time
   itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
-
-
-  console.log(req.body.order_id);
-  console.log(req.body.ready_time);
-
-
-
     let tempOrderId = req.body.order_id;
     let tempDeliveryTime = req.body.ready_time;
 
-    Client.messages.create({
-      to: "+17788836554",
-      from: "+17786540355",
-      body: tempDeliveryTime,
-      }, function(err, message) {
-        if (err) {
-          console.error('twilio error', err.message)
-          return;
-        }
-        console.log(message.sid);
-      });
+    // Client.messages.create({
+    //   to: "+17788836554",
+    //   from: "+17786540355",
+    //   body: tempDeliveryTime,
+    //   }, function(err, message) {
+    //     if (err) {
+    //       console.error('twilio error', err.message)
+    //       return;
+    //     }
+    //     console.log(message.sid);
+    //   });
 
     DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
       console.log("data updated!")
@@ -260,10 +241,8 @@ let newObject = {};
 
    for(eachobject of arr){
 
-     let objectId = eachobject.order_id;
-
-
-     let temp = {
+    let objectId = eachobject.order_id;
+    let temp = {
 
      order_id: eachobject["order_id"],
      quantity: [eachobject["quantity"]],
