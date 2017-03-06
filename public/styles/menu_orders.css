@@ -8,11 +8,9 @@
   width: 100%;
 }
 
-.order_items {
+.cart {
   background: lightgrey;
-  height: 10em;
+  margin: 2em 0 2em 0 ;
   position: fixed;
-  top: 12em;
-  width: 10em;
   z-index: 9999;
 }

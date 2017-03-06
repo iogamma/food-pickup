@@ -1,7 +1,7 @@
 //==================== Constants
 const express       = require('express');
 const cookieSession = require('cookie-session');
-//const groupArray = require('group-array');
+const util          = require('../lib/utils/helpers.js');
 const itemsRoutes   = express.Router();
 // Twilio Credentials
 const accountSid = 'AC8fdabc7d09216813636cc2828fbcb42a';
@@ -62,27 +62,28 @@ module.exports = function(DataHelpers) {
   // Load the menu of the chosen restaurant
   itemsRoutes.get("/restaurants/:id", (req, res) => {
     const restaurantId = req.params.id;
+
     DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       const orderId = value[0].id;
-      DataHelpers.retrieveMenuData(restaurantId, orderId, (menuItems) => {
+      DataHelpers.retrieveMenuData(restaurantId, orderId, (order) => {
+        const totals = util.calOrderTotals(order);
         const templateVars = {
           userId        : req.session.user_id,
           restaurantId  : restaurantId,
-          menuItems     : menuItems
+          menuItems     : order,
+          totals        : totals
         };
-        console.log(templateVars.menuItems);
         res.render("menu_orders.ejs", templateVars);
       });
     });
   });
-  //   // user gets updates on the delivery time
 
-  // // Ajax to keep checking the status of the cart and display
-
-  itemsRoutes.get("/cart", (req, res) => {
+  // user gets updated cart
+  itemsRoutes.get("/cart/:id", (req, res) => {
+    restaurant_id = req.params.id;
     DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       const orderId = value[0].id;
-      DataHelpers.retrieveSummaryData(orderId, (value) => {
+      DataHelpers.retrieveMenuData(restaurant_id, orderId, (value) => {
         res.json(value);
       });
     });
@@ -103,91 +104,69 @@ module.exports = function(DataHelpers) {
 
   itemsRoutes.get("/order", (req, res) => {
     DataHelpers.retrieveReadyTime(req.session.user_id, (value) => {
-      let templateVars = {};
-      templateVars = { myValue : value }
-      //const readyTime = value[0].ready_time;
-      console.log(templateVars.myValue);
-      // for (key in templateVars.myValue){
-      //   console.log(templateVars.myValue[key].ready_time);
-      // }
+      const templateVars = { myValue : value };
       res.render("confirmation.ejs", templateVars)
     });
   });
 
   itemsRoutes.post("/order", (req, res) => {
     DataHelpers.updateCurrentOrder(req.session.user_id, "placed", (value) => {
-      DataHelpers.createNewOrder(req.session.user_id, (value) => {
       DataHelpers.retrieveOrderItems(req.session.user_id, (value) => {
-        let urls = stringifyOrder(value);
-        let urlMessage="https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order="+urls;
-        Client.calls.create({
-         url: urlMessage,
-         to: "+17788836554",
-         from: "+17786540355"
-        }, function(err, call) {
-          if (err) {
-          console.error('twilio error', err.message)
-          return;
-          }
-        console.log(call.sid);
-        });
-      })
-    })
-  })
-    res.redirect("/order");
-  });
+        const urls = util.stringifyOrder(value);
+        const urlMessage = "https://handler.twilio.com/twiml/EH00aca2e9cbf88acbc2462fd5b3fefe01?Order=" + urls;
 
-  // // Ajax to keep checking the status of the cart and display
+        // Client.calls.create({
+        //  url: urlMessage,
+        //  to: "+17788913326",  // owner's number
+        //  from: "+17786540355"
+        // }, function(err, call) {
+        //   if (err) {
+        //   console.error('twilio error', err.message)
+        //   return;
+        //   }
+        // });
+
+        res.redirect("/order");
+      });
+    });
+  });
 
   // owner to get the new order
   itemsRoutes.get("/restaurants/:restaurants_id/orders", function(req, res) {
     // Get userId from query string
     const restaurantId = req.params.restaurants_id;
     // Assign a cookie session
-    req.session.user_id = restaurantId;
+    // req.session.user_id = restaurantId;
     DataHelpers.ownerOrders(restaurantId, (orders) => {
-      let templateVars = {};
-      let groupMyOrder = GroupQuery(orders);
-      templateVars = {
+      const groupMyOrder = util.groupQuery(orders);
+      const templateVars = {
         myOrders : groupMyOrder,
         userId   : restaurantId
-      }
-      for(key in templateVars.myOrders){
-        console.log(templateVars.myOrders[key]);
-        console.log(templateVars.myOrders[key].name)
-      }
+      };
 
       res.render("owner.ejs", templateVars);
-      res.status(200);
+      //res.status(200);
     });
   });
 
-  // Owner submites delivary time
+  // Owner submits delivary time
   itemsRoutes.post("/restaurants/:restaurants_id/pickup", function(req, res) {
+    const tempOrderId = req.body.order_id;
+    const tempDeliveryTime = req.body.ready_time;
+    const customerMessage = `Your order will be ready in: ${tempDeliveryTime} minutes.`;
 
-
-  console.log(req.body.order_id);
-  console.log(req.body.ready_time);
-
-
-
-    let tempOrderId = req.body.order_id;
-    let tempDeliveryTime = req.body.ready_time;
-
-    Client.messages.create({
-      to: "+17788836554",
-      from: "+17786540355",
-      body: tempDeliveryTime,
-      }, function(err, message) {
-        if (err) {
-          console.error('twilio error', err.message)
-          return;
-        }
-        console.log(message.sid);
-      });
+    // Client.messages.create({
+    //   to: "+17788913326",  // customer's phone number
+    //   from: "+17786540355",
+    //   body: tempDeliveryTime,
+    //   }, function(err, message) {
+    //     if (err) {
+    //       console.error('twilio error', err.message)
+    //       return;
+    //     }
+    //   });
 
     DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
-      console.log("data updated!")
       res.status(200);
       res.redirect("/restaurants/1/orders");
     });
@@ -199,7 +178,6 @@ module.exports = function(DataHelpers) {
     let tempOrderId = req.body.order_id;
 
     DataHelpers.updateCompleted(tempOrderId,(updates) => {
-      console.log("data updated!")
       res.status(200);
       res.redirect("/restaurants/1/orders");
     });
@@ -211,81 +189,27 @@ module.exports = function(DataHelpers) {
     let tempDeliveryTime = null;
 
     DataHelpers.updateDelivaryTime(tempOrderId,tempDeliveryTime,(updates) => {
-      console.log("data updated!")
       res.status(200);
     });
   });
 
-  // practicing twilio
-  itemsRoutes.get("/twilio", function(req, res) {
-    let deliveryTime = '15 min'
+  // // practicing twilio
+  // itemsRoutes.get("/twilio", function(req, res) {
+  //   let deliveryTime = '15 min'
 
-    Client.messages.create({
-      to: "+17788836554",
-      from: "+17786540355",
-      body: deliveryTime,
-      }, function(err, message) {
-        if (err) {
-          console.error('twilio error', err.message)
-          return;
-        }
-        console.log(message.sid);
-      });
+  //   Client.messages.create({
+  //     to: "+17788836554",
+  //     from: "+17786540355",
+  //     body: deliveryTime,
+  //     }, function(err, message) {
+  //       if (err) {
+  //         console.error('twilio error', err.message)
+  //         return;
+  //       }
+  //     });
 
-    res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
-  });
-
-
-function GroupQuery (arr){
-
-let newObject = {};
-
-   for(eachobject of arr){
-
-     let objectId = eachobject.order_id;
-
-
-     let temp = {
-
-     order_id: eachobject["order_id"],
-     quantity: [eachobject["quantity"]],
-     username: eachobject["username"],
-     phone_number: eachobject["phone_number"],
-     status: eachobject["status"],
-     name: [eachobject["name"]],
-     ready_time: eachobject["ready_time"]
-     };
-
-     if(! newObject[objectId]) {
-
-       newObject[objectId] = temp;
-
-
-     } else {
-         newObject[objectId].name.push(temp.name.toString());
-         newObject[objectId].quantity.push(temp.quantity.toString());
-     }
-
-   }
-   return newObject;
-}
-
+  //   res.send("<html><body>twilio page<b>!!!</b></body></html>\n");
+  // });
 
   return itemsRoutes;
-
-function stringifyOrder (arr) {
- let stringOrder = "";
-
- arr.forEach((obj) => {
-   stringOrder += obj.quantity;
-   stringOrder += "%20"
-   stringOrder += (obj.name + "s");
-   stringOrder += ","
- });
-   stringOrder = stringOrder.replace(/[’]/g, "");
-   stringOrder = stringOrder.replace(/\s/g, "%20");
-   stringOrder = stringOrder.replace("-", "%20");
-   return stringOrder;
-}
-
 };
