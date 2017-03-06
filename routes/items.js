@@ -1,6 +1,7 @@
 //==================== Constants
 const express       = require('express');
 const cookieSession = require('cookie-session');
+const util          = require('../lib/utils/helpers.js');
 //const groupArray = require('group-array');
 const itemsRoutes   = express.Router();
 // Twilio Credentials
@@ -62,22 +63,26 @@ module.exports = function(DataHelpers) {
   // Load the menu of the chosen restaurant
   itemsRoutes.get("/restaurants/:id", (req, res) => {
     const restaurantId = req.params.id;
-    console.log("outside if condition")
-    console.log(!req.session.restaurant_id)
-    // if (!req.session.restaurant_id){
-      req.session.restaurant_id = restaurantId;
-      console.log(req.session.restaurant_id)
-      DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
-        const orderId = value[0].id;
-        DataHelpers.retrieveMenuData(restaurantId, orderId, (menuItems) => {
-          const templateVars = {
-            userId        : req.session.user_id,
-            restaurantId  : restaurantId,
-            menuItems     : menuItems
-          };
-          console.log(templateVars.menuItems);
-          res.render("menu_orders.ejs", templateVars);
-        });
+
+    DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
+      const orderId = value[0].id;
+      DataHelpers.retrieveAllData(restaurantId, orderId, (order) => {
+        // //Calculate the totals for an order
+        // menuItems.forEach((item) => {
+        //   itemTotal = Number(item.quantity) * item.price;
+        //   totals.subtotal += itemTotal;
+        // })
+        // totals.gst = totals.subtotal * 0.05;
+        // totals.pst = totals.subtotal * 0.07;
+        // totals.total = totals.subtotal + totals.gst + totals.pst;
+        const totals = util.calOrderTotals(order);
+        const templateVars = {
+          userId        : req.session.user_id,
+          restaurantId  : restaurantId,
+          menuItems     : order,
+          totals        : totals
+        };
+        res.render("menu_orders.ejs", templateVars);
       });
     // } else{
     //   console.log("before redirect")
@@ -89,10 +94,12 @@ module.exports = function(DataHelpers) {
 
   // // Ajax to keep checking the status of the cart and display
 
-  itemsRoutes.get("/cart", (req, res) => {
+  itemsRoutes.get("/cart/:id", (req, res) => {
+    restaurant_id = req.params.id;
     DataHelpers.retrieveOrderId(req.session.user_id, (value) => {
       const orderId = value[0].id;
-      DataHelpers.retrieveSummaryData(orderId, (value) => {
+
+      DataHelpers.retrieveMenuData(restaurant_id, orderId, (value) => {
         res.json(value);
       });
     });
